@@ -1,0 +1,15 @@
+{
+	
+	"courseCode" : "CSC 310 - Programming Languages",
+	"name": "Dcn. Stephen Frezza",
+	"office": "CTT G06",
+	"officeHours" : "MF 10-12, R 2-3",
+	"phone": "740-283-6287",
+	"email": "tabrown@franciscan.edu",
+	"semester": "Spring 2025",
+	"classroom" : "CTT G03",
+	"classDays": "TR",
+	"classTimes": "12:45-2:00PM",
+	"courseDescription": "Examines the basic concepts of programming languages: programming language processors, elementary and structured data types, subprograms, sequence control, data control, storage management, syntax and translation, and programming environments. The student will also study three different programming languages and write a short project in each."
+	"requiredResources": ["A laptop that runs Windows"]
+}
