@@ -1,21 +1,106 @@
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
+from docx.shared import Pt
+import json
+
+
+def add_paragraph(document, title, content):
+    #Creates the title of the new paragraph
+    para = document.add_paragraph()
+    run = para.add_run(title)
+    run.bold = True
+    run.font.size = Pt(14)
+    
+    #Adds the body message
+    run = para.add_run(f"\n{content}")
+    run.font.size = Pt(14)
+
+
+f = open('syllabus.json', encoding="utf8")
+data = json.load(f)
+
 
 document = Document()
-
 section = document.sections[0]
-header = section.header
+section.left_margin = Inches(.75)    # Set left margin to 1 inch
+section.right_margin = Inches(.75)   # Set right margin to 1 inch
+section.top_margin = Inches(.75)     # Set top margin to 1 inch
+section.bottom_margin = Inches(.75)  # Set bottom margin to 1 inch
 
-headerParagraph = header.add_paragraph()
 
-run = headerParagraph.add_run()
-run.add_picture('FUS_Logo.png', width=Inches(5))
+image = document.add_paragraph()
 
-headerParagraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+run = image.add_run()
+run.add_picture('FUS_Logo.png', width=Inches(4))
 
-#Gets the last paragraph and centers it
-#lastParagraph = document.paragraphs[-1]
-#lastParagraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+image.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+#Adds the course code to the top of the page
+docTitle = document.add_paragraph()
+run = docTitle.add_run("COURSE INFORMATION SHEET")
+run.bold = True
+run.font.size = Pt(20)
+docTitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+courseTitle = document.add_paragraph()
+run = courseTitle.add_run(data['courseCode'])
+run.font.size = Pt(16)
+courseTitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+
+
+table = document.add_table(rows=1, cols=2)
+
+# Set the width of the columns 
+table.columns[0].width = 3000000  # Width of the left column
+table.columns[1].width = 3000000  # Width of the right column
+
+# Fill the left column with professor's details
+left_cell = table.cell(0, 0)
+left_cell.text = f"Professor: {data['professorName']}\nOffice: {data['office']}\nOffice Hours: {data['officeHours']}\nPhone: {data['phone']}\nEmail: {data['email']}"
+
+# Fill the right column with aligned items
+right_cell = table.cell(0, 1)
+right_cell.text = f"Semester: {data['semester']}\nClassroom: {data['classroom']}\nClass Meeting Days: {data['classDays']}\nClass Meeting Times: {data['classTimes']}"
+
+# Adjust formatting for the items in the table
+for para in right_cell.paragraphs:
+    para.alignment = 2
+    for run in para.runs:
+        run.font.size = Pt(14)
+        run.font.name = 'Times New Roman'
+
+for para in left_cell.paragraphs:
+    for run in para.runs:
+        run.font.size = Pt(14)
+        run.font.name = 'Times New Roman'
+
+#The next thing it will write is the Course Description, using the same paragraph style as all other paragraphs
+add_paragraph(document, "Course Description", data['courseDescription'])
+
+#Bulletted List of required items
+
+if (len(data['requiredResources']) > 0):
+    reqItems = document.add_paragraph()
+    run = reqItems.add_run("Required Resources:")
+    run.font.size = Pt(14)
+    run.bold = True
+    reqItems.paragraph_format.space_after = Pt(0)
+    
+    for item in data['requiredResources']:
+        para = document.add_paragraph(f"{item}", style='List Bullet')
+        for run in para.runs:
+            run.font.size = Pt(14)
+
+#Now it will start generating 'normal' paragraphs
+for paragraph in data['paragraph']:
+    add_paragraph(document, paragraph['title'], paragraph['content'])
+    
+
+#Changes all the font to Times New Roman
+for para in document.paragraphs:
+    for run in para.runs:
+        run.font.name = 'Times New Roman'
 
 document.save("image.docx")
