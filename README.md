@@ -38,3 +38,8 @@ We are using vite to make a React project. To set up the dependencies for vite:
 Then to start the project on a local development server for front end work, you can do so using:
 
 npm run dev
+
+## To deploy the React page to the server:
+
+1. run the command: npm run build
+2. Move the dist folder from the project into server/public
