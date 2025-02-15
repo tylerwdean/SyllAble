@@ -42,4 +42,5 @@ npm run dev
 ## To deploy the React page to the server:
 
 1. run the command: npm run build
-2. Move the dist folder from the project into server/public
+2. Move the dist folder from the project into server/public. This will make the express server statically serve this folder. 
+3. Start the Express server with the command in /server: npm run start
