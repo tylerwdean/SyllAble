@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Syllabus Form</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>SyllAble</h1>
+        <h2>Where you're able to build a syllabus</h2>
+    </header>
+
+    <main>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Information Form</title>
+</head>
+<body>
+    <h2>Course Information Form</h2>
+    <form>
+        <label id="courseCode">Course Code: <input type="text" name="courseCode" value="CSC 310 - Programming Languages"></label><br>
+        <fieldset id="headerInfo">
+            <legend>Course Information</legend>
+            <div id="professorInfo">
+                <label>Professor Name: <input type="text" name="professorName" value="Dcn. Stephen Frezza"></label><br>
+                <label>Office: <input type="text" name="office" value="CTT G06"></label><br>
+                <label>Office Hours: <input type="text" name="officeHours" value="MF 10-12, R 2-3"></label><br>
+                <label>Phone: <input type="text" name="phone" value="740-283-6287"></label><br>
+                <label>Email: <input type="email" name="email" value="tabrown@franciscan.edu"></label><br>
+            </div>
+
+            <div id="classInfo">
+                <label>Semester: <input type="text" name="semester" value="Spring 2025"></label><br>
+                <label>Classroom: <input type="text" name="classroom" value="CTT G03"></label><br>
+                <label>Class Days: <input type="text" name="classDays" value="TR"></label><br>
+                <label>Class Times: <input type="text" name="classTimes" value="12:45-2:00PM"></label><br>
+            </div>
+        </fieldset>
+        <fieldset>
+        <label>Course Description:</label><br>
+        <textarea name="courseDescription" rows="5">Examines the basic concepts of programming languages: programming language processors, elementary and structured data types, subprograms, sequence control, data control, storage management, syntax and translation, and programming environments. The student will also study three different programming languages and write a short project in each.</textarea><br>
+        </fieldset>
+        <fieldset>
+        <label>Required Resources:</label>
+        <ul>
+            <li><input type="text" name="requiredResources[]" value="Laptop that can run Windows"></li>
+            <li><input type="text" name="requiredResources[]" value="Happy Attitude"></li>
+            <li><input type="text" name="requiredResources[]" value="Brain that is willing to learn"></li>
+        </ul>
+        </fieldset>
+
+        <fieldset>
+            <input type="text" name="para1Title" value = "Assessment Overview"/>
+            <textarea name="paragraph[0][content]" rows="4">This class will start with most of your grades coming from exercises that you and peers solve before a deadline. Later, around halfway through the course we move to less frequent exercise sets (which will become conceptual rather than problems-based) and shift more toward projects.</textarea>
+        </fieldset>
+        <fieldset>
+            <h4>Pre-Class Preparation</h4>
+            <textarea name="paragraph[1][content]" rows="6">Occasionally, there will be short assignments or videos for you to watch before class, along with an associated bit of work you need to do. These will help your understanding of what is covered during class...</textarea>
+        </fieldset>
+        
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+    </main>
+</body>
+</html>

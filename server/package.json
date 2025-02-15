@@ -1,0 +1,29 @@
+{
+  "name": "syllable",
+  "version": "1.0.0",
+  "description": "A goated team of Franciscan Students tackle the biggest problem at the University- Syllabi!!!",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylerwdean/SyllAble.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylerwdean/SyllAble/issues"
+  },
+  "homepage": "https://github.com/tylerwdean/SyllAble#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
