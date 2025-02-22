@@ -2,7 +2,7 @@ import React from 'react'
 import CourseInformationForm from '../CourseInformationForm/CourseInformationForm.jsx'
 import CourseDescription from '../CourseDescription/CourseDescription.jsx'
 import BulletParagraph from '../BulletParagraph/BulletParagraph.jsx'
-import Paragraph from '../Paragraph/Paragraph.jsx'
+import Paragraph from '../TextParagraph/TextParagraph.jsx'
 
 function Form() {
     return (
