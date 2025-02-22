@@ -15,15 +15,6 @@ h2 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.courseCode {
-    margin-left: 20%;
-    margin-right: 20%;
-    text-align: center;
-}
-
-.courseCode input {
-    width: 75%;
-}
 
 fieldset {
     border-radius: 5px;
@@ -32,14 +23,6 @@ fieldset {
     border: 1px solid var(--accent-color);
 }
 
-.headerInfo {
-    display: flex;
-}
-
-.professorInfo,
-.classInfo {
-    width: 100%;
-}
 
 label {
     font-weight: bold;
@@ -55,6 +38,7 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-family: Arial, Helvetica, sans-serif;
+    resize: none;
 }
 
 button {

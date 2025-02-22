@@ -1,0 +1,18 @@
+.courseCode {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.courseCode input {
+    width: 75%;
+}
+
+.headerInfo {
+    display: flex;
+}
+
+.professorInfo,
+.classInfo {
+    width: 100%;
+}

@@ -7,7 +7,7 @@ import Form from './Components/Form/Form.jsx'
 function App() {
   return (
     <>
-      <Header className="Header" />
+      <Header/>
       <Form />
     </>
   )
