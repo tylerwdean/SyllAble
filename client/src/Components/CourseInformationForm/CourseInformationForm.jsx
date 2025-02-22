@@ -1,59 +1,59 @@
 function CourseInformationForm() {
     return (
         <>
-            <div className="container mb-3">
+            <div className="form-group">
                 <div className="row">
                     <div className="col-3"></div>
                     <div className="col-6 text-center mb-1">
-                        <label className="form-label">Course Code: </label>
-                        <input className="form-control" type="text" name="courseCode" value="CSC 310 - Programming Languages" />
+                        <label htmlFor="courseCode">Course Code and Title: </label>
+                        <input className="form-control" type="text" id="courseCode" name="courseCode" placeholder="Enter course code and title" />
                     </div>
                     <div className="col-3"></div>
                 </div>
-                <h2 className="display-6 mb-3">Course Information</h2>
+                <h4 className="mb-3">Course Information</h4>
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label className="form-label" for="professorName">Professor Name: </label>
-                        <input type="text" className="form-control" name="professorName" value="Dcn. Stephen Frezza" />
+                        <label htmlFor="professorName">Professor Name: </label>
+                        <input type="text" className="form-control" name="professorName" id="professorName" placeholder="Enter your name" />
                     </div>
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Semester: </label>
-                        <input className="form-control" type="text" name="semester" value="Spring 2025" />
-                    </div>
-
-                    <div className="col-md-6 mb-3">
-                        <label class="form-label">Office: </label>
-                        <input className="form-control" type="text" name="office" value="CTT G06" />
+                        <label htmlFor="semester">Semester: </label>
+                        <input type="text" className="form-control" name="semester" id="semester" placeholder="Enter the current semester" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Classroom: </label>
-                        <input className="form-control" type="text" name="classroom" value="CTT G03" />
+                        <label htmlFor="office">Office: </label>
+                        <input className="form-control" type="text" name="office" id="office" placeholder="Enter your office" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Office Hours: </label>
-                        <input className="form-control" type="text" name="officeHours" value="MF 10-12, R 2-3" />
+                        <label htmlFor="classroom">Classroom: </label>
+                        <input className="form-control" type="text" id="classroom" name="classroom" placeholder="Enter the classroom" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Class Day(s): </label>
-                        <input className="form-control" type="text" name="classDays" value="TR" />
+                        <label htmlFor="officeHours">Office Hours: </label>
+                        <input className="form-control" type="text" name="officeHours" id="officeHours" placeholder="Enter your office hours" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Phone: </label>
-                        <input className="form-control" type="text" name="phone" value="740-283-6287" />
+                        <label htmlFor="classDays">Class Day(s): </label>
+                        <input className="form-control" type="text" id="classDays" name="classDays" placeholder="Enter the class day(s)" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Class Time: </label>
-                        <input className="form-control" type="text" name="classTimes" value="12:45-2" />
+                        <label htmlFor="phone">Phone: </label>
+                        <input className="form-control" type="text" id="phone" name="phone" placeholder="Enter your phone number" />
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <label class="form-label">Email: </label>
-                        <input className="form-control" type="email" name="email" value="tabrown@franciscan.edu" />
+                        <label htmlFor="classTimes">Class Time: </label>
+                        <input className="form-control" type="text" id="classTimes" name="classTimes" placeholder="Enter the class time" />
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+                        <label htmlFor="email">Email: </label>
+                        <input className="form-control" id="email" type="email" name="email" placeholder="Enter your email" />
                     </div>
                 </div>
             </div>
