@@ -1,13 +1,12 @@
 import React from 'react'
-import style from './Form.module.css'
-import '../CourseInformationForm/CourseInformationForm.jsx'
 import CourseInformationForm from '../CourseInformationForm/CourseInformationForm.jsx'
 import CourseDescription from '../CourseDescription/CourseDescription.jsx'
+
 function Form() {
     return (
         <>
-            <h2>Course Information Form</h2>
-            <form className={style.form}>
+            <h2 className='display-4 text-center my-4'>Syllabus Editor</h2>
+            <form className="needs-validaton container" >
                 <CourseInformationForm />
                 <CourseDescription />
                 <fieldset>
