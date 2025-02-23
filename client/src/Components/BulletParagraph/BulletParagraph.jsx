@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import Paragraphs from '../Paragraphs/Paragraphs'
 
 function BulletParagraph(props) {
 
+    const id = props.id
     const [title, setTitle] = useState("")
     //holds the different bullet points (strings) and the data for them
     const [bullets, setBullets] = useState([""])
@@ -30,8 +32,8 @@ function BulletParagraph(props) {
         <>
 
             <input type="text"
-                name='title'
-                id='title'
+                name={id + "-title"}
+                id={id + "-title"}
                 className='form-control form-control-lg mb-3'
                 placeholder='Enter title'
                 value={title}
@@ -40,9 +42,10 @@ function BulletParagraph(props) {
 
             <ul className='list-group'>
                 {bullets.map((point, index) => (
-                    <li key={index} className='list-group-item'>
+                    <li key={id + "-li-" + index} className='list-group-item'>
                         <div className="input-group">
                             <input type="text"
+                                name={id + "-" + index}
                                 value={point}
                                 placeholder={`Bullet point ${index + 1}`}
                                 className="form-control"
@@ -53,8 +56,8 @@ function BulletParagraph(props) {
                 ))}
             </ul>
 
-            <button type="button" className="btn btn-primary mt-3" onClick={addBullet}>Add bullet point</button>
-
+            <button type="button" className="btn btn-primary mt-3 col-3" onClick={addBullet}>Add bullet point</button>
+            <button type='button' className='btn btn-danger mt-3 col-3 offset-6' onClick={props.deleteParagraph}>Delete Paragraph</button>
         </>
     )
 }

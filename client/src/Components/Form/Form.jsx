@@ -2,7 +2,8 @@ import React from 'react'
 import CourseInformationForm from '../CourseInformationForm/CourseInformationForm.jsx'
 import CourseDescription from '../CourseDescription/CourseDescription.jsx'
 import BulletParagraph from '../BulletParagraph/BulletParagraph.jsx'
-import Paragraph from '../TextParagraph/TextParagraph.jsx'
+import TextParagraph from '../TextParagraph/TextParagraph.jsx'
+import Paragraphs from '../Paragraphs/Paragraphs.jsx'
 
 function Form() {
     return (
@@ -15,13 +16,9 @@ function Form() {
                     <hr />
                     <CourseDescription />
                     <hr />
-                    <BulletParagraph />
-                    <hr />
-                    <Paragraph text="This class will start with most of your grades coming from exercises that you and peers solve before a deadline. Later, around halfway through the course we move to less frequent exercise sets (which will become conceptual rather than problems-based) and shift more toward projects." />
-                    <hr />
-                    <Paragraph text="Occasionally, there will be short assignments or videos for you to watch before class, along with an associated bit of work you need to do. These will help your understanding of what is covered during class..." />
+                    <Paragraphs />
 
-                    <button className="btn btn-primary mt-3 mb-3 col-4" type="submit">Submit</button>
+                    <button className="btn btn-primary mt-3 mb-3 col-4" type="submit" id="submit-btn">Submit</button>
                 </div>
             </form>
         </>
