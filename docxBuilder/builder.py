@@ -1,3 +1,5 @@
+#requires python-docx. This can be installed with pip install python-docx
+
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
@@ -25,14 +27,14 @@ def add_text_paragraph(document, paragraph):
     run.font.size = Pt(14)
 
 def add_bullet_paragraph(document, paragraph):
-    if (len(paragraph['bulletPoints']) > 0):
+    if (len(paragraph['content']) > 0):
         reqItems = document.add_paragraph()
         run = reqItems.add_run(paragraph['title'])
         run.font.size = Pt(14)
         run.bold = True
         reqItems.paragraph_format.space_after = Pt(0)
     
-    for item in paragraph['bulletPoints']:
+    for item in paragraph['content']:
         para = document.add_paragraph(f"{item}", style='List Bullet')
         for run in para.runs:
             run.font.size = Pt(14)
@@ -98,12 +100,18 @@ for para in left_cell.paragraphs:
         run.font.name = 'Times New Roman'
 
 #The next thing it will write is the Course Description, using the same paragraph style as all other paragraphs
-add_paragraph(document, "Course Description", data['courseDescription'])
+
+courseDescriptionParagraph = {
+    "style": "text",
+    "title": "Course Description",
+    "content": data['courseDescription']
+}
+add_paragraph(document, courseDescriptionParagraph)
 
 #Bulletted List of required items
 
 #Now it will start generating 'normal' paragraphs
-for paragraph in data['paragraph']:
+for paragraph in data['paragraphs']:
     add_paragraph(document, paragraph)
     
 
