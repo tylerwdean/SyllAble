@@ -1,4 +1,14 @@
+import { useContext } from "react"
+import FormContext from "../../Contexts/FormContext"
+
 function CourseInformationForm() {
+
+    const { courseInformation, setCourseInformation } = useContext(FormContext)
+
+    const updateCourseInformation = (fieldName, newValue) => {
+
+    }
+
     return (
         <>
             <div className="form-group">
@@ -6,7 +16,17 @@ function CourseInformationForm() {
                     <div className="col-3"></div>
                     <div className="col-6 text-center mb-1">
                         <label htmlFor="courseCode">Course Code and Title: </label>
-                        <input className="form-control" type="text" id="courseCode" name="courseCode" placeholder="Enter course code and title" />
+                        <input className="form-control"
+                            type="text"
+                            id="courseCode"
+                            name="courseCode"
+                            placeholder="Enter course code and title"
+                            value={courseInformation.courseCode}
+                            onChange={(e) => {
+                                setCourseInformation((prev) => ({
+                                    ...prev, courseCode: e.target.value
+                                }))
+                            }} />
                     </div>
                     <div className="col-3"></div>
                 </div>
