@@ -3,21 +3,42 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
 from docx.shared import Pt
 import json
+import sys
 
+input_file_path = sys.argv[1]
 
-def add_paragraph(document, title, content):
+def add_paragraph(document, paragraph):
+    if paragraph['style'] == 'bullet':
+        add_bullet_paragraph(document, paragraph)
+    elif paragraph['style'] == 'text':
+        add_text_paragraph(document, paragraph)
+
+def add_text_paragraph(document, paragraph):
     #Creates the title of the new paragraph
     para = document.add_paragraph()
-    run = para.add_run(title)
+    run = para.add_run(paragraph['title'])
     run.bold = True
     run.font.size = Pt(14)
     
     #Adds the body message
-    run = para.add_run(f"\n{content}")
+    run = para.add_run(f"\n{paragraph['content']}")
     run.font.size = Pt(14)
 
+def add_bullet_paragraph(document, paragraph):
+    if (len(paragraph['bulletPoints']) > 0):
+        reqItems = document.add_paragraph()
+        run = reqItems.add_run(paragraph['title'])
+        run.font.size = Pt(14)
+        run.bold = True
+        reqItems.paragraph_format.space_after = Pt(0)
+    
+    for item in paragraph['bulletPoints']:
+        para = document.add_paragraph(f"{item}", style='List Bullet')
+        for run in para.runs:
+            run.font.size = Pt(14)
 
-f = open('syllabus.json', encoding="utf8")
+
+f = open(input_file_path, encoding="utf8")
 data = json.load(f)
 
 
@@ -81,21 +102,9 @@ add_paragraph(document, "Course Description", data['courseDescription'])
 
 #Bulletted List of required items
 
-if (len(data['requiredResources']) > 0):
-    reqItems = document.add_paragraph()
-    run = reqItems.add_run("Required Resources:")
-    run.font.size = Pt(14)
-    run.bold = True
-    reqItems.paragraph_format.space_after = Pt(0)
-    
-    for item in data['requiredResources']:
-        para = document.add_paragraph(f"{item}", style='List Bullet')
-        for run in para.runs:
-            run.font.size = Pt(14)
-
 #Now it will start generating 'normal' paragraphs
 for paragraph in data['paragraph']:
-    add_paragraph(document, paragraph['title'], paragraph['content'])
+    add_paragraph(document, paragraph)
     
 
 #Changes all the font to Times New Roman
@@ -103,4 +112,4 @@ for para in document.paragraphs:
     for run in para.runs:
         run.font.name = 'Times New Roman'
 
-document.save("image.docx")
+document.save("output.docx")

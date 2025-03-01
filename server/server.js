@@ -20,8 +20,12 @@ app.post("/submit-form", (req, res) => {
     //get the data
     const jsonData = req.body
 
-    const inputFilePath = path.join(__dirname, "temp_syllabus.json")
+    const inputFilePath = path.join(__dirname, "../docxBuilder/temp_syllabus.json")
     fs.writeFileSync(inputFilePath, JSON.stringify(jsonData))
+
+    const pythonScriptPath = path.join(__dirname, "../docxBuilder/builder.py")
+    const pythonProcess = spawn("python3", [pythonScriptPath, inputFilePath])
+
 
 
 })
