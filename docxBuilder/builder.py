@@ -1,3 +1,5 @@
+#requires python-docx. This can be installed with pip install python-docx
+
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
@@ -98,7 +100,13 @@ for para in left_cell.paragraphs:
         run.font.name = 'Times New Roman'
 
 #The next thing it will write is the Course Description, using the same paragraph style as all other paragraphs
-add_paragraph(document, "Course Description", data['courseDescription'])
+
+courseDescriptionParagraph = {
+    "style": "text",
+    "title": "Course Description",
+    "content": data['courseDescription']
+}
+add_paragraph(document, courseDescriptionParagraph)
 
 #Bulletted List of required items
 
