@@ -8,7 +8,6 @@ const postFormToServer = async (data) => {
     try {
         //turn data into a sendable json type
         const jsonData = JSON.stringify(data)
-
         const response = await fetch("/submit-form", {
             method: "POST",
             headers: {
@@ -21,11 +20,24 @@ const postFormToServer = async (data) => {
             throw new Error('Network response was not okay')
         }
 
-        const result = await response.json()
-        console.log('Success: ', result)
+        // Handle the file download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Syllabus.docx"; // Suggested filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+        console.log("File downloaded successfully")
+
     } catch (error) {
         console.error('Error: ', error)
     }
+
+
 }
 
 function Form() {
@@ -52,8 +64,9 @@ function Form() {
         //gather all the info together into the final json
         const syllabusJson = { ...courseInformation, courseDescription, paragraphs }
 
+        console.log(syllabusJson)
         //POST the json to the server
-        postFormToServer(syllabusJson)
+        await postFormToServer(syllabusJson)
     }
 
     return (
@@ -61,7 +74,7 @@ function Form() {
             <FormContext.Provider value={{ courseInformation, setCourseInformation, courseDescription, paragraphs, setParagraphs }}>
                 <h2 className='text-center my-4'>Syllabus Editor</h2>
                 <hr className='col-10 offset-1' />
-                <form onSubmit={submit()}>
+                <form onSubmit={submit}>
                     <div className='container-fluid col-lg-8 col-md-10 col-sm-12'>
                         <CourseInformationForm />
                         <hr />

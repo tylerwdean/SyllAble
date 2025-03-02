@@ -6,8 +6,15 @@ from docx.shared import Inches
 from docx.shared import Pt
 import json
 import sys
+import os
 
 input_file_path = sys.argv[1]
+output_file_path = sys.argv[2]
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to FUS_Logo.png
+logo_path = os.path.join(script_dir, "FUS_Logo.png")
 
 def add_paragraph(document, paragraph):
     if paragraph['style'] == 'bullet':
@@ -55,7 +62,7 @@ section.bottom_margin = Inches(.75)  # Set bottom margin to 1 inch
 image = document.add_paragraph()
 
 run = image.add_run()
-run.add_picture('FUS_Logo.png', width=Inches(4))
+run.add_picture(logo_path, width=Inches(4))
 
 image.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -120,4 +127,4 @@ for para in document.paragraphs:
     for run in para.runs:
         run.font.name = 'Times New Roman'
 
-document.save("output.docx")
+document.save(output_file_path)
