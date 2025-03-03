@@ -28,6 +28,7 @@ const TextParagraph = (props) => {
 
     return (
         <>
+            <hr />
             <input type="text"
                 className="form-control form-control-lg mb-3"
                 name={props.id + "-title"}

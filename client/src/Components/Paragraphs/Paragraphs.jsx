@@ -43,16 +43,11 @@ const Paragraphs = () => {
 
                 if (para.style == 'bullet') {
                     return (
-                        <React.Fragment key={para.id}>
-                            <BulletParagraph id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
-                            <hr />
-                        </React.Fragment>)
+                        <BulletParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
+                    )
                 } else {
                     return (
-                        <React.Fragment key={para.id}>
-                            <TextParagraph id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
-                            <hr />
-                        </React.Fragment>
+                        <TextParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
                     )
                 }
             })}

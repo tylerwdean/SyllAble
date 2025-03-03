@@ -49,7 +49,7 @@ function BulletParagraph(props) {
 
     return (
         <>
-
+            <hr />
             <input type="text"
                 name={props.id + "-title"}
                 id={props.id + "-title"}

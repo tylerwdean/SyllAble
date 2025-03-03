@@ -116,13 +116,10 @@ function Form() {
             <FormContext.Provider value={{ courseInformation, setCourseInformation, courseDescription, paragraphs, setParagraphs }}>
                 <h2 className='text-center my-4'>Syllabus Editor</h2>
                 <button className="btn btn-secondary mt-1 mb-1 col-2 offset-5" onClick={fillTestData}>Dev Button</button>
-                <hr className='col-10 offset-1' />
                 <form onSubmit={submit}>
                     <div className='container-fluid col-lg-8 col-md-10 col-sm-12'>
                         <CourseInformationForm />
-                        <hr />
                         <CourseDescription />
-                        <hr />
                         <Paragraphs />
 
                         <button className="btn btn-primary mt-3 mb-3 col-4" type="submit" id="submit-btn">Submit</button>

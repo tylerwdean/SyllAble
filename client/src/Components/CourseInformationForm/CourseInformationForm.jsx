@@ -11,6 +11,7 @@ function CourseInformationForm() {
 
     return (
         <>
+            <hr />
             <div className="form-group">
                 <div className="row">
                     <div className="col-3"></div>
