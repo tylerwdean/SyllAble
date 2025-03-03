@@ -1,56 +1,75 @@
-import React, { useState, useEffect } from 'react'
-import Paragraphs from '../Paragraphs/Paragraphs'
+import React, { useContext } from 'react'
+import FormContext from '../../Contexts/FormContext'
 
 function BulletParagraph(props) {
 
-    const id = props.id
-    const [title, setTitle] = useState("")
-    //holds the different bullet points (strings) and the data for them
-    const [bullets, setBullets] = useState([""])
+    const { paragraphs, setParagraphs } = useContext(FormContext)
 
-    const updateTitle = (e) => { setTitle(e.target.value) }
+    const currentParagraph = paragraphs.find((para) => para.id === props.id)
+    let currentBullets = currentParagraph.content
+
+    const updateTitle = (newTitle) => {
+        console.log("Changing title to: ", newTitle)
+        const updatedParagraphs = paragraphs.map((para) => {
+            return para.id === props.id ? { ...para, title: newTitle } : para
+        })
+
+        setParagraphs(updatedParagraphs)
+    }
 
     //creates a new bullet with text and a count
     const addBullet = () => {
-        setBullets(prevState => [...prevState, ""])
+        console.log("Adding bullet")
+        currentBullets = [...currentBullets, ""]
+        const updatedParagraphs = paragraphs.map((para) => {
+            return para.id === props.id ? { ...para, content: currentBullets } : para
+        })
+        setParagraphs(updatedParagraphs)
     }
 
     //updates the bullet point to the new point based on the index given
     function updateBullet(index, newPoint) {
-        const points = [...bullets]
-        points[index] = newPoint
-        setBullets(points)
+        console.log("Updating a bullet point: ", newPoint)
+        currentBullets[index] = newPoint
+        const updatedParagraphs = paragraphs.map((para) => {
+            return para.id === props.id ? { ...para, content: currentBullets } : para
+        })
+        setParagraphs(updatedParagraphs)
     }
 
     //filters where the index is the deleted index, called by the button next to the form to be deleted 
-    const removeButton = (index) => {
-        const deleted = bullets.filter((point, count) => index !== count)
-        setBullets(deleted)
+    const removeBullet = (index) => {
+        console.log("Removing bullet")
+        currentBullets = currentBulletes.filter((point, count) => index !== count)
+        const updatedParagraphs = paragraphs.map((para) => {
+            return para.id === props.id ? { ...para, content: currentBullets } : para
+        })
+        setParagraphs(updatedParagraphs)
     }
 
     return (
         <>
 
             <input type="text"
-                name={id + "-title"}
-                id={id + "-title"}
+                name={props.id + "-title"}
+                id={props.id + "-title"}
                 className='form-control form-control-lg mb-3'
                 placeholder='Enter title'
-                value={title}
-                onChange={(e) => updateTitle(e)} />
+                value={currentParagraph.title}
+                onChange={(e) => updateTitle(e.target.value)} />
 
 
             <ul className='list-group'>
-                {bullets.map((point, index) => (
-                    <li key={id + "-li-" + index} className='list-group-item'>
+                {currentBullets.map((point, index) => (
+                    <li key={props.id + "-li-" + index} className='list-group-item'>
                         <div className="input-group">
                             <input type="text"
-                                name={id + "-" + index}
-                                value={point}
+                                name={props.id + "-" + index}
+                                value={currentBullets[index]}
                                 placeholder={`Bullet point ${index + 1}`}
                                 className="form-control"
                                 onChange={(e) => updateBullet(index, e.target.value)} />
-                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeButton(index)}>-</button></div>
+                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeBullet(index)}>-</button></div>
                         </div>
                     </li>
                 ))}

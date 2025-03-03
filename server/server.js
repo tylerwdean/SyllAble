@@ -55,6 +55,14 @@ app.post("/submit-form", (req, res) => {
                             console.log("File deleted successfully:", inputFilePath);
                         }
                     })
+
+                    fs.unlink(outputFilePath, (err) => {
+                        if (err) {
+                            console.error("Error deleting file:", err);
+                        } else {
+                            console.log("File deleted successfully:", outputFilePath);
+                        }
+                    })
                 }))
                 console.log("Successful Python script")
             }

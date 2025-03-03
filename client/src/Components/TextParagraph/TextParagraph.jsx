@@ -39,6 +39,7 @@ const TextParagraph = (props) => {
                 placeholder="Start writing your paragraph..."
                 value={currentParagraph?.content || ""}
                 onChange={(e) => setContent(e.target.value)}
+                rows={4} // Minimum row height
                 id={props.id + '-textarea'} />
             <button className="btn btn-danger col-3 offset-9 mt-3" type="button" onClick={props.deleteParagraph}>Delete Paragraph</button>
         </>
