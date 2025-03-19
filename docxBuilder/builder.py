@@ -1,23 +1,53 @@
+#requires python-docx. This can be installed with pip install python-docx
+
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
 from docx.shared import Pt
 import json
+import sys
+import os
 
+input_file_path = sys.argv[1]
+output_file_path = sys.argv[2]
 
-def add_paragraph(document, title, content):
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to FUS_Logo.png
+logo_path = os.path.join(script_dir, "FUS_Logo.png")
+
+def add_paragraph(document, paragraph):
+    if paragraph['style'] == 'bullet':
+        add_bullet_paragraph(document, paragraph)
+    elif paragraph['style'] == 'text':
+        add_text_paragraph(document, paragraph)
+
+def add_text_paragraph(document, paragraph):
     #Creates the title of the new paragraph
     para = document.add_paragraph()
-    run = para.add_run(title)
+    run = para.add_run(paragraph['title'])
     run.bold = True
     run.font.size = Pt(14)
     
     #Adds the body message
-    run = para.add_run(f"\n{content}")
+    run = para.add_run(f"\n{paragraph['content']}")
     run.font.size = Pt(14)
 
+def add_bullet_paragraph(document, paragraph):
+    if (len(paragraph['content']) > 0):
+        reqItems = document.add_paragraph()
+        run = reqItems.add_run(paragraph['title'])
+        run.font.size = Pt(14)
+        run.bold = True
+        reqItems.paragraph_format.space_after = Pt(0)
+    
+    for item in paragraph['content']:
+        para = document.add_paragraph(f"{item}", style='List Bullet')
+        for run in para.runs:
+            run.font.size = Pt(14)
 
-f = open('syllabus.json', encoding="utf8")
+
+f = open(input_file_path, encoding="utf8")
 data = json.load(f)
 
 
@@ -32,7 +62,7 @@ section.bottom_margin = Inches(.75)  # Set bottom margin to 1 inch
 image = document.add_paragraph()
 
 run = image.add_run()
-run.add_picture('FUS_Logo.png', width=Inches(4))
+run.add_picture(logo_path, width=Inches(4))
 
 image.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -77,25 +107,19 @@ for para in left_cell.paragraphs:
         run.font.name = 'Times New Roman'
 
 #The next thing it will write is the Course Description, using the same paragraph style as all other paragraphs
-add_paragraph(document, "Course Description", data['courseDescription'])
+
+courseDescriptionParagraph = {
+    "style": "text",
+    "title": "Course Description",
+    "content": data['courseDescription']
+}
+add_paragraph(document, courseDescriptionParagraph)
 
 #Bulletted List of required items
 
-if (len(data['requiredResources']) > 0):
-    reqItems = document.add_paragraph()
-    run = reqItems.add_run("Required Resources:")
-    run.font.size = Pt(14)
-    run.bold = True
-    reqItems.paragraph_format.space_after = Pt(0)
-    
-    for item in data['requiredResources']:
-        para = document.add_paragraph(f"{item}", style='List Bullet')
-        for run in para.runs:
-            run.font.size = Pt(14)
-
 #Now it will start generating 'normal' paragraphs
-for paragraph in data['paragraph']:
-    add_paragraph(document, paragraph['title'], paragraph['content'])
+for paragraph in data['paragraphs']:
+    add_paragraph(document, paragraph)
     
 
 #Changes all the font to Times New Roman
@@ -103,4 +127,4 @@ for para in document.paragraphs:
     for run in para.runs:
         run.font.name = 'Times New Roman'
 
-document.save("image.docx")
+document.save(output_file_path)

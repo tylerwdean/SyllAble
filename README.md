@@ -2,6 +2,12 @@
 
 A goated team of Franciscan Students tackle the biggest problem at the University- Syllabi!!!
 
+## Starting the servers for development
+
+The project is now incorperated, front end and back end. To start the backend cd into /server and run 'npm run dev'. 
+Create a new terminal since that will run in the background and start the client. To do that, cd into client and run 'npm run dev'.
+Then you can open up the link the client one says and the project will run. 
+
 ## Local development environment
 
 This project will be done in React with Javascript. The server will be an ExpressJS server and the database will be a mariaDB database.
