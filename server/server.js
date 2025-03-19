@@ -15,17 +15,16 @@ app.get("/edit-syllabus", (req, res) => {
 
 })
 
-app.post("/login", (req, res) => {
+app.post("/submit-login", (req, res) => {
     console.log("Login request received");
 
     const jsonData = req.body;
     let email = jsonData.email
     let password = jsonData.password
-    console.log(email, password)
 
     //will need to check the database and verify the username and password
 
-    res.redirect('/')
+    res.status(200).send("Valid login information")
 })
 
 app.post("/submit-form", (req, res) => {

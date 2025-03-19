@@ -1,13 +1,20 @@
 import React from "react";
+import axios from "axios";
 import { useState } from "react";
 
 const LoginBox = () => {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const login = () => {
-
+    const login = async (e) => {
+        e.preventDefault()
+        const data = {email, password}
+        console.log(data)
+        const response = await axios.post('/submit-login', data);
+        if (response.status == 200){
+            window.location.href = '/';
+        }
     }
 
     return (
@@ -32,7 +39,7 @@ const LoginBox = () => {
                         placeholder="Enter your password"
                         onChange={(e) => setPassword(e.target.value)}/>
                     </div>
-                    <div className="row"><button className="btn btn-primary col-md-4 col-sm-12 mb-2 mb-md-0">Submit</button> <button className="btn btn-secondary col-md-5 col-sm-12 offset-md-3">Don't have an account?</button></div>
+                    <div className="row"><button className="btn btn-primary col-md-4 col-sm-12 mb-2 mb-md-0" type="submit">Submit</button> <button className="btn btn-secondary col-md-5 col-sm-12 offset-md-3">Don't have an account?</button></div>
                     </form>
                 </div>
             </div>
