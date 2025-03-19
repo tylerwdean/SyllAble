@@ -15,6 +15,19 @@ app.get("/edit-syllabus", (req, res) => {
 
 })
 
+app.post("/login", (req, res) => {
+    console.log("Login request received");
+
+    const jsonData = req.body;
+    let email = jsonData.email
+    let password = jsonData.password
+    console.log(email, password)
+
+    //will need to check the database and verify the username and password
+
+    res.redirect('/')
+})
+
 app.post("/submit-form", (req, res) => {
     console.log("Submit form request received")
     //get the data

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import CourseInformationForm from '../CourseInformationForm/CourseInformationForm.jsx'
 import CourseDescription from '../CourseDescription/CourseDescription.jsx'
 import Paragraphs from '../Paragraphs/Paragraphs.jsx'
@@ -6,22 +7,16 @@ import FormContext from '../../Contexts/FormContext.jsx'
 
 const postFormToServer = async (data) => {
     try {
-        //turn data into a sendable json type
-        const jsonData = JSON.stringify(data)
-        const response = await fetch("/submit-form", {
-            method: "POST",
+        // Send the data as JSON using Axios
+        const response = await axios.post("/submit-form", data, {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: jsonData
-        })
-
-        if (!response.ok) {
-            throw new Error('Network response was not okay')
-        }
+            responseType: 'blob' // Ensure the response is treated as a binary blob
+        });
 
         // Handle the file download
-        const blob = await response.blob();
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -31,14 +26,12 @@ const postFormToServer = async (data) => {
         a.remove();
         window.URL.revokeObjectURL(url);
 
-        console.log("File downloaded successfully")
+        console.log("File downloaded successfully");
 
     } catch (error) {
-        console.error('Error: ', error)
+        console.error('Error: ', error);
     }
-
-
-}
+};
 
 function Form() {
 
