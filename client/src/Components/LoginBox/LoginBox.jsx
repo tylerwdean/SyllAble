@@ -12,8 +12,9 @@ const LoginBox = () => {
         const data = {email, password}
         console.log(data)
         const response = await axios.post('/submit-login', data);
+        //this then redirects if the status code is 200, but this is a development thing. It should instead get the authentication token, store that locally, and then redirect to homepage
         if (response.status == 200){
-            window.location.href = '/';
+            window.location.href = '/edit';
         }
     }
 
