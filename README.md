@@ -44,3 +44,32 @@ npm run dev
 1. run the command: npm run build
 2. Move the dist folder from the project into server/public. This will make the express server statically serve this folder. 
 3. Start the Express server with the command in /server: npm run start
+
+## To install MariaDB:
+sudo apt install mariadb-server mariadb-client  
+sudo systemctl start mariadb  
+sudo systemctl enable mariadb  
+sudo mysql_secure_installation  
+press enter when prompted
+press n when prompted (and enter)
+press n when prompted (and enter)
+press y when prompted for anonymous users (and enter)
+press Y for localhost
+Y to remove test database
+Y to reload privilege tables
+
+To log into MariaDB:
+sudo mysql -u root -p
+
+To set up the database:
+CREATE DATABASE syllableDB;
+USE syllableDB;
+EXIT;
+mysql -u root -p syllableDB < /mnt/c/Users/Cephandrius/Downloads/SyllAble-main/server/models/database.sql (REPLACE WITH YOUR OWN USER PATH)
+
+To make sure the database is imported properly: 
+mysql -u root -p
+SHOW DATABASES;
+USE syllableDB;
+SHOW TABLES;
+
