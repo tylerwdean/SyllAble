@@ -45,7 +45,7 @@ const Paragraphs = () => {
                     return (
                         <BulletParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
                     )
-                } else {
+                } else if (para.style == 'text') {
                     return (
                         <TextParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
                     )
