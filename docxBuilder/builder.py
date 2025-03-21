@@ -43,6 +43,7 @@ def add_table_paragraph(document, paragraph):
     colNum=len(rows[0])
 
     table = document.add_table(rows=rowNum, cols=colNum)
+    table.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     #The algorithm will first get the length of the largest text of each column
     longestItemsInRow = []
@@ -59,14 +60,41 @@ def add_table_paragraph(document, paragraph):
     
     #From there, we will get the sizes of each col, but we will also make sure they are a min size of 10 characters
     #The whole screen is 6000000 units long, so multiply that by the ratio to get each one. 
-    for i in range(len(colNum)):
+    for i in range(colNum):
         table.columns[i].width = max(int(6000000*ratio[i]), 300000)
 
     #if the col's width is less than 10% of the total available width, take the remaining width from the largest col
-
+    
+    colWidths = [table.columns[i].width for i in range(colNum)]
+    for i in range(colNum):
+        if (table.columns[i].width < 300000):
+            #calculate difference to get the small col to 10%
+            diff = 300000-table.columns[i].width
+            table.columns[i].width = 300000
+            #Find the largest col and set the width to prev. width -diff
+            maxIndex = colWidths.index(max(colWidths))
+            #update the data array (used for easy calculations) and the real columns
+            colWidths[maxIndex] -= diff
+            table.columns[maxIndex] -= diff
 
     #Shrink the columns to fit the text if the text is smaller than the whole screen
 
+    #We will assume that each character will take .7 of a character, and we are using 14pt font size
+    for i in range(colNum):
+        textWidth = len(longestItemsInRow[i])*Pt(14).inches*.7*1440 #text-length * (fontsize * size of font estimated to be taken by characters * 1440 to convert to twips)
+        if (table.columns[i].width > textWidth):
+            table.columns[i].width = textWidth
+
+    #Now that the table size is correct, we can insert the data into the table
+    for i in range(colNum):
+        for j in range(rowNum):
+            cell = table.cell(j, i)
+            cell.text = rows[j][i]
+
+            for para in cell.paragraphs:
+                for run in para.runs:
+                    run.font.size = Pt(14)
+                    run.font.name = 'Times New Roman'
 
 
 def add_bullet_paragraph(document, paragraph):
