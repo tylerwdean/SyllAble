@@ -19,6 +19,8 @@ logo_path = os.path.join(script_dir, "FUS_Logo.png")
 def add_paragraph(document, paragraph):
     if paragraph['style'] == 'bullet':
         add_bullet_paragraph(document, paragraph)
+    if paragraph['style'] == 'table':
+        add_table_paragraph(document, paragraph)
     elif paragraph['style'] == 'text':
         add_text_paragraph(document, paragraph)
 
@@ -32,6 +34,40 @@ def add_text_paragraph(document, paragraph):
     #Adds the body message
     run = para.add_run(f"\n{paragraph['content']}")
     run.font.size = Pt(14)
+
+def add_table_paragraph(document, paragraph):
+    
+    #max number of col is 5
+    rows = paragraph['rows']
+    rowNum=len(rows)
+    colNum=len(rows[0])
+
+    table = document.add_table(rows=rowNum, cols=colNum)
+
+    #The algorithm will first get the length of the largest text of each column
+    longestItemsInRow = []
+    longestItemsInRow.append(max(len(rows[j][i]) for j in range(rowNum)) for i in range(colNum))
+
+    #Calculate the ratio of each number to each other to get percentage of total space to take up. 
+    total = 0
+    ratio=[0 for i in range(colNum)]
+    for i in range(colNum):
+        total += longestItemsInRow[i]
+    for i in range(colNum):
+        #array of floating point numbers representing the ratio
+        ratio.append(longestItemsInRow[i]/total)
+    
+    #From there, we will get the sizes of each col, but we will also make sure they are a min size of 10 characters
+    #The whole screen is 6000000 units long, so multiply that by the ratio to get each one. 
+    for i in range(len(colNum)):
+        table.columns[i].width = max(int(6000000*ratio[i]), 300000)
+
+    #if the col's width is less than 10% of the total available width, take the remaining width from the largest col
+
+
+    #Shrink the columns to fit the text if the text is smaller than the whole screen
+
+
 
 def add_bullet_paragraph(document, paragraph):
     if (len(paragraph['content']) > 0):
