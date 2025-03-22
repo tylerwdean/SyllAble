@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/submit-login": {
+        target: "http://localhost:3000", // Your backend server URL
+        changeOrigin: true,
+        secure: false,
+      }
     },
   }
 })

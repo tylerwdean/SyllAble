@@ -1,15 +1,16 @@
-import { useState } from 'react'
-import Header from './Components/Header/Header.jsx'
-import Form from './Components/Form/Form.jsx'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js'
+import React from "react"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SyllabusEditor from "./Pages/SyllabusEditor";
+import LoginPage from "./Pages/LoginPage";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Form />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/edit" element={<SyllabusEditor/>} /> {}
+        <Route path="/login" element={<LoginPage />} /> {}
+      </Routes>
+    </Router>
   )
 }
 
