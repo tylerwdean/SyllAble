@@ -92,6 +92,7 @@ function Form() {
                 {
                     id: 4,
                     style: "table",
+                    title: "",
                     rows: [
                         [
                             "A",
@@ -118,6 +119,7 @@ function Form() {
                 {
                     id: 5,
                     style: "table",
+                    title: "",
                     rows: [
                         [
                             "Week 1",

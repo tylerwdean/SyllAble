@@ -70,7 +70,7 @@ const TableParagraph = (props) => {
                                 key = {props.id + "cell-" + rowIndex + "-" + cellIndex}
                                 className="form-control col-sm"
                                 value={cell}
-                                onChange={(e) => updateCell(e.targetValue, rowIndex, cellIndex)}
+                                onChange={(e) => updateCell(e.target.value, rowIndex, cellIndex)}
                                 />
                             )
                         })}
