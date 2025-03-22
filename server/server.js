@@ -42,6 +42,10 @@ app.post("/submit-form", (req, res) => {
 
     console.log("Python process started")
 
+    pythonProcess.stdout.on('data', (data) => {
+        console.log(`Python stdout: ${data}`);
+    });
+
     //catch python errors
     pythonProcess.stderr.on("data", (data) => {
         console.error(`Python script error: ${data}`);
