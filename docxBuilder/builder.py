@@ -108,7 +108,7 @@ def add_table_paragraph(document, paragraph):
         if (longestLenInCol[i]<5):
             textWidth = int(longestLenInCol[i]*Pt(14).inches*1440*1.15) #text-length * (fontsize * 1440 to convert to twips)
         else:
-            textWidth = int(longestLenInCol[i]*Pt(14).inches*1440*.9) #text-length * (fontsize * 1440 to convert to twips)
+            textWidth = int(longestLenInCol[i]*Pt(14).inches*1440*.7) #text-length * (fontsize * 1440 to convert to twips)
         
         if (colWidths[i] > textWidth):
             colWidths[i] = textWidth
