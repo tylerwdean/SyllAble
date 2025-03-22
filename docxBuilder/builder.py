@@ -39,6 +39,13 @@ def add_text_paragraph(document, paragraph):
 
 def add_table_paragraph(document, paragraph):
     
+    #Add a title if present for the table
+    if len(paragraph['title']) > 0:
+        para = document.add_paragraph()
+        run = para.add_run(paragraph['title'])
+        run.bold = True
+        run.font.size = Pt(14)
+
     #max number of col is 5
     rows = paragraph['rows']
     rowNum=len(rows)
