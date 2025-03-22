@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import BulletParagraph from '../BulletParagraph/BulletParagraph.jsx'
 import TextParagraph from '../TextParagraph/TextParagraph.jsx'
 import FormContext from "../../Contexts/FormContext.jsx";
+import TableParagraph from "../TableParagraph/TableParagraph.jsx";
 
 const Paragraphs = () => {
 
@@ -26,6 +27,13 @@ const Paragraphs = () => {
                 title: "",
                 content: ""
             }
+        } else if (style == "table") {
+            newPara = {
+                id: Date.now(),
+                style,
+                title: "",
+                rows: [[""]]
+            }
         }
 
         //update the context with the new paragraphs
@@ -49,6 +57,10 @@ const Paragraphs = () => {
                     return (
                         <TextParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)} />
                     )
+                } else if (para.style == 'table') {
+                    return (
+                        <TableParagraph key={para.id} id={para.id} deleteParagraph={() => deleteParagraph(para.id)}/>
+                    )
                 }
             })}
 
@@ -65,6 +77,9 @@ const Paragraphs = () => {
                     <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
                         createParagraph("text")
                     }}>Text Paragraph</a></li>
+                    <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
+                        createParagraph("table")
+                    }}>Table Paragraph</a></li>
                 </ul>
             </div>
 

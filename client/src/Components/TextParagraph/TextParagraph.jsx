@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import FormContext from "../../Contexts/FormContext";
 
 const TextParagraph = (props) => {
