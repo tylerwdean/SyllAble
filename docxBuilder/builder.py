@@ -56,14 +56,15 @@ def add_table_paragraph(document, paragraph):
     table.autofit = False
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
 
-    #The algorithm will first get the length of the largest text of each column
-    averageItemInColLen = []  #This is the array of the lengths of the largest item in each col
+    #The algorithm will first get the average length of the text in each column
+    averageItemInColLen = []  #This has the average len() of the strings in each col, as an int
     for i in range(colNum):
         sumRowLen = 0
         for j in range(rowNum):
             sumRowLen += len(rows[j][i])
         averageItemInColLen.append(int(sumRowLen/rowNum)+1)
     
+    #finds the longest len() item and adds that to the array. Used for resizing the table at the end.
     longestLenInCol = []
     for i in range(colNum):
         indexOfLongest=0
@@ -83,17 +84,18 @@ def add_table_paragraph(document, paragraph):
     print(ratio)
     
     #From there, we will get the sizes of each col, but we will also make sure they are a min size of 10 characters
-    #The whole screen is 8,640 units long, so multiply that by the ratio to get each one. 
+    #The whole screen is 10080 units long, so multiply that by the ratio to get each one. 
     colWidths = []
     for i in range(colNum):
-        colWidths.append(int(8640*ratio[i]))
+        colWidths.append(int(10080*ratio[i]))
 
-    #if the col's width is less than 10% of the total available width, take the remaining width from the largest col
+    #if the col's width is less than the min width, take the remaining width from the largest col
+    minColWidth = 1500
     for i in range(colNum):
-        if (colWidths[i] < 1500):
+        if (colWidths[i] < minColWidth):
             #calculate difference to get the small col to 10%
-            diff = 1500-colWidths[i]
-            colWidths[i] = 1500
+            diff = minColWidth-colWidths[i]
+            colWidths[i] = minColWidth
             #Find the largest col and set the width to prev. width -diff
             maxIndex = colWidths.index(max(colWidths))
             #update the data array (used for easy calculations) and the real columns
