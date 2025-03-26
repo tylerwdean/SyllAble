@@ -54,7 +54,7 @@ function BulletParagraph(props) {
                 name={props.id + "-title"}
                 id={props.id + "-title"}
                 className='form-control form-control-lg mb-3'
-                placeholder='Enter title'
+                placeholder='Enter section title'
                 value={currentParagraph.title}
                 onChange={(e) => updateTitle(e.target.value)} />
 
@@ -69,14 +69,14 @@ function BulletParagraph(props) {
                                 placeholder={`Bullet point ${index + 1}`}
                                 className="form-control"
                                 onChange={(e) => updateBullet(index, e.target.value)} />
-                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeBullet(index)}>-</button></div>
+                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeBullet(index)} disabled = {currentBullets==1}>-</button></div>
                         </div>
                     </li>
                 ))}
             </ul>
 
-            <button type="button" className="btn btn-primary mt-3 col-3" onClick={addBullet}>Add bullet point</button>
-            <button type='button' className='btn btn-danger mt-3 col-3 offset-6' onClick={props.deleteParagraph}>Delete Paragraph</button>
+            <button type="button" className="btn btn-success mt-3 col-2" onClick={addBullet}>Add bullet point</button>
+            <button type='button' className='btn btn-danger mt-3 col-2 offset-8' onClick={props.deleteParagraph}>Delete Paragraph</button>
         </>
     )
 }

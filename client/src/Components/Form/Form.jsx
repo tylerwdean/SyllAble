@@ -161,15 +161,15 @@ function Form() {
     return (
         <>
             <FormContext.Provider value={{ courseInformation, setCourseInformation, courseDescription, paragraphs, setParagraphs }}>
-                <h2 className='text-center my-4'>Syllabus Editor</h2>
+                <h2 className='text-center my-4 fw-bold' style={{ fontFamily: "monospace"}}>Syllabus Editor</h2>
                 <button className="btn btn-secondary mt-1 mb-1 col-2 offset-5" onClick={fillTestData}>Dev Button</button>
                 <form onSubmit={submit}>
-                    <div className='container-fluid col-lg-8 col-md-10 col-sm-12'>
+                    <div className='container-fluid col-lg-8 col-md-10 col-sm-12' style={{ fontFamily: "initial", fontSize: "larger"}}>
                         <CourseInformationForm />
                         <CourseDescription />
                         <Paragraphs />
 
-                        <button className="btn btn-primary mt-3 mb-3 col-4" type="submit" id="submit-btn">Submit</button>
+                        <button className="btn btn-success mt-5 mb-5 col-4 offset-md-4 fs-5" type="submit" id="submit-btn" style={{ fontFamily: "cursive" }}>Submit</button>
                     </div>
                 </form>
             </FormContext.Provider>

@@ -1,0 +1,22 @@
+.custom-header {
+    background-color: rgb(36, 64, 42);
+    text-align: center;
+    color: white;
+}
+
+.custom-header h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 40pt;
+    font-style: bold;
+}
+
+.custom-header h4 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.image {
+    position:absolute;
+    top:15%;
+    right: 5%;
+    width:100px;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import User_Logo from "./User_Logo.png";
+import Pass_Logo from "./Password_Logo.webp";
 
 const LoginBox = () => {
 
@@ -23,24 +25,33 @@ const LoginBox = () => {
             <div className="container">
                 <div className="col-md-6 col-sm-12 offset-md-3 ">
                     <div className="row">
-                        <h1 className="h3 text-dark text-centered mt-5 px-0">Login:</h1>
+                        <h1 className="h3 text-dark text-center mb-4 mt-5 px-0 fs-2 fw-bold" style={{fontFamily: "monospace"}}>Login:</h1>
                     </div>
                     <form onSubmit={login}>
-                    <div className="row">
-                        <input className="form-control mb-2" 
+                    <div className="row d-flex justify-content-center align-items-center">
+                        <img src={User_Logo} alt='User Logo' className="mr-3" style={{ width: '50px', height: '25px', marginRight: '7px', marginLeft: '8px' }}/>
+                        <input className="form-control mb-3 mt-3" 
                         type="text" 
                         placeholder="Enter your email address" 
                         id="email"
-                        onChange={(e) => setEmail(e.target.value)}/>
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={{ flexGrow: 1, maxWidth: 'calc(100% - 65px)' }} />
                     </div>
-                    <div className="row">
-                        <input className="form-control mb-2" 
+                    <div className="row d-flex justify-content-center align-items-center">
+                        <img src={Pass_Logo} alt='Password Logo' className="mr-3" style={{ width: '65px', height: '40px', marginBottom: '30px' }}/>
+                        <input className="form-control mb-5 mt-3" 
                         type="password" 
                         id="password" 
                         placeholder="Enter your password"
-                        onChange={(e) => setPassword(e.target.value)}/>
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ flexGrow: 1, maxWidth: 'calc(100% - 65px)' }} />
                     </div>
-                    <div className="row"><button className="btn btn-primary col-md-4 col-sm-12 mb-2 mb-md-0" type="submit">Submit</button> <button className="btn btn-secondary col-md-5 col-sm-12 offset-md-3">Don't have an account?</button></div>
+                    <div className="row d-flex justify-content-center">
+                        <button className="btn btn-success col-md-12 col-sm-12 mb-3 mt-5 fs-5" type="submit" style={{ fontFamily: "cursive" }}>Submit</button> 
+                    </div>
+                    <div className="row d-flex justify-content-center">
+                        <button className="btn btn-warning col-md-12 col-sm-12 mb-3 mt-2 fs-6" style={{ fontFamily: "cursive" }}>Don't have an account?</button>
+                    </div>
                     </form>
                 </div>
             </div>
