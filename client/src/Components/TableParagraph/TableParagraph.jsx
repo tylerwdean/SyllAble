@@ -55,7 +55,7 @@ const TableParagraph = (props) => {
             <hr/>
             <input type="text" 
             className="form-control form-control-lg mb-3" 
-            placeholder="Title (Optional)" 
+            placeholder="Enter section title (Optional)" 
             value={currentParagraph?.title || ""} 
             onChange={(e) => setTitle(e.target.value)}/> 
             {rows.map((row, rowIndex) => {
@@ -103,13 +103,13 @@ const TableParagraph = (props) => {
                 <div className="col-1" id="forSpacingPurposes"></div>
             </div>
 
-            <button className="btn btn-primary col-2 mt-3" onClick={(e) => {
+            <button className="btn btn-success col-2 mt-3" onClick={(e) => {
                 e.preventDefault();
                 addRow();
             }}>
                 Add Row
             </button>
-            <button className="btn btn-primary col-2 offset-1 mt-3" 
+            <button className="btn btn-success col-2 offset-md-1 mt-3" 
             onClick={(e) => {
                 e.preventDefault();
                 addCol();
@@ -117,7 +117,7 @@ const TableParagraph = (props) => {
             disabled = {colsFull}>
                 Add Col
             </button>
-            <button className="btn btn-danger col-3 offset-4 mt-3" onClick={props.deleteParagraph}>Delete Paragraph</button>
+            <button className="btn btn-danger col-2 offset-5 mt-3" onClick={props.deleteParagraph}>Delete Paragraph</button>
         </>
     )
 }

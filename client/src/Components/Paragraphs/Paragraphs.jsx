@@ -67,7 +67,7 @@ const Paragraphs = () => {
             <hr />
             {/* Designed with bootstrap, creates a dropdown and based on what's selected creates the right paragraph */}
             <div className="dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button className="btn btn-warning dropdown-toggle col-2 offset-md-10" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Create Paragraph
                 </button>
                 <ul className="dropdown-menu">
