@@ -8,7 +8,7 @@ import FormContext from '../../Contexts/FormContext.jsx'
 const postFormToServer = async (data) => {
     try {
         // Send the data as JSON using Axios
-        const response = await axios.post("/submit-form", data, {
+        const response = await axios.post("/api/submit-form", data, {
             headers: {
                 'Content-Type': 'application/json'
             },

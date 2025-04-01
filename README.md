@@ -4,9 +4,9 @@ A goated team of Franciscan Students tackle the biggest problem at the Universit
 
 ## Starting the servers for development
 
-The project is now incorperated, front end and back end. To start the backend cd into /server and run 'npm run dev'. 
+The project is now incorperated, front end and back end. To start the backend cd into /server and run 'npm run dev'.
 Create a new terminal since that will run in the background and start the client. To do that, cd into client and run 'npm run dev'.
-Then you can open up the link the client one says and the project will run. 
+Then you can open up the link the client one says and the project will run.
 
 ## Local development environment
 
@@ -18,11 +18,11 @@ The generator uses the library [python-docx](https://github.com/python-openxml/p
 
 ## Getting set up for running the project server and installing all dependencies
 
-Using Ubuntu via WSL: 
+Using Ubuntu via WSL:
 
-1. Clone the project. 
+1. Clone the project.
 2. cd into /server
-3. Install nodejs and npm with the commands: 
+3. Install nodejs and npm with the commands:
 
 sudo apt install unzip
 curl -o- https://fnm.vercel.app/install | bash
@@ -48,5 +48,7 @@ npm run dev
 ## To deploy the React page to the server:
 
 1. run the command: npm run build
-2. Move the dist folder from the project into server/public. This will make the express server statically serve this folder. 
+2. Move the dist folder from the project into server/public. This will make the express server statically serve this folder.
 3. Start the Express server with the command in /server: npm run start
+
+## Setting up the database

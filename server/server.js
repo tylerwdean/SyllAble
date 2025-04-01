@@ -3,6 +3,7 @@ const path = require("path")
 const app = express()
 const fs = require("fs")
 const { spawn } = require("child_process")
+const cors = require("cors")
 
 const PORT = process.env.PORT || 3000
 
@@ -11,11 +12,17 @@ app.set("views", "./views")
 app.use(express.static("public/dist"));
 app.use(express.json())
 
-app.get("/edit-syllabus", (req, res) => {
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow requests from Vite
+    credentials: true, // If using cookies
+  }));
 
+app.get("/api/healthcheck", (req, res) => {
+    console.log("Healthcheck request received");
+    res.send("Application healthy");
 })
 
-app.post("/submit-login", (req, res) => {
+app.post("/api/submit-login", (req, res) => {
     console.log("Login request received");
 
     const jsonData = req.body;
@@ -27,18 +34,18 @@ app.post("/submit-login", (req, res) => {
     res.status(200).send("Valid login information")
 })
 
-app.post("/submit-form", (req, res) => {
+app.post("/api/submit-form", (req, res) => {
     console.log("Submit form request received")
     //get the data
     const jsonData = req.body
 
-    const inputFilePath = path.join(__dirname, "../docxBuilder/temp_syllabus.json")
-    const outputFilePath = path.join(__dirname, "../docxBuilder/output.docx")
+    console.log("Starting Python Script");
+    const inputFilePath = "docxBuilder/temp_syllabus.json"
+    const outputFilePath = "docxBuilder/output.docx"
     fs.writeFileSync(inputFilePath, JSON.stringify(jsonData))
 
-    const pythonScriptPath = path.join(__dirname, "../docxBuilder/builder.py")
-    const pythonProcess = spawn("python3", [pythonScriptPath, inputFilePath, outputFilePath])
-
+    const pythonScriptPath = "docxBuilder/builder.py"
+    const pythonProcess = spawn("/usr/bin/python3", [pythonScriptPath, inputFilePath, outputFilePath])
 
     console.log("Python process started")
 
