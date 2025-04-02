@@ -40,7 +40,7 @@ function BulletParagraph(props) {
     //filters where the index is the deleted index, called by the button next to the form to be deleted 
     const removeBullet = (index) => {
         console.log("Removing bullet")
-        currentBullets = currentBulletes.filter((point, count) => index !== count)
+        currentBullets = currentBullets.filter((_, count) => index !== count)
         const updatedParagraphs = paragraphs.map((para) => {
             return para.id === props.id ? { ...para, content: currentBullets } : para
         })
@@ -60,7 +60,7 @@ function BulletParagraph(props) {
 
 
             <ul className='list-group'>
-                {currentBullets.map((point, index) => (
+                {currentBullets.map((_, index) => (
                     <li key={props.id + "-li-" + index} className='list-group-item'>
                         <div className="input-group">
                             <input type="text"
@@ -69,7 +69,7 @@ function BulletParagraph(props) {
                                 placeholder={`Bullet point ${index + 1}`}
                                 className="form-control"
                                 onChange={(e) => updateBullet(index, e.target.value)} />
-                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeBullet(index)} disabled = {currentBullets==1}>-</button></div>
+                            <div className="input-group-append"><button type="button" className='btn btn-danger' onClick={() => removeBullet(index)} disabled = {currentBullets.length===1}>-</button></div>
                         </div>
                     </li>
                 ))}
