@@ -11,12 +11,7 @@ export default defineConfig({
       usePolling: true  // Required for hot-reload
     },
     proxy: {
-      "/api/submit-form": {
-        target: "http://express-server:3000", // Your backend server URL
-        changeOrigin: true,
-        secure: false,
-      },
-      "/api/submit-login": {
+      "/api": {
         target: "http://express-server:3000", // Your backend server URL
         changeOrigin: true,
         secure: false,
