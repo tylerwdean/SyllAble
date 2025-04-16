@@ -5,14 +5,14 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: true,  // Needed for Docker
+    port: 5173,
+    watch: {
+      usePolling: true  // Required for hot-reload
+    },
     proxy: {
-      "/submit-form": {
-        target: "http://localhost:3000", // Your backend server URL
-        changeOrigin: true,
-        secure: false,
-      },
-      "/submit-login": {
-        target: "http://localhost:3000", // Your backend server URL
+      "/api": {
+        target: "http://express-server:3000", // Your backend server URL
         changeOrigin: true,
         secure: false,
       }

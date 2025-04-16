@@ -9,6 +9,7 @@ import json
 import sys
 import os
 
+print("Python build script running")
 input_file_path = sys.argv[1]
 output_file_path = sys.argv[2]
 
