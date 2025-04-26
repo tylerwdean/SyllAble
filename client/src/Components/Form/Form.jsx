@@ -161,7 +161,6 @@ function Form() {
     return (
         <>
             <FormContext.Provider value={{ courseInformation, setCourseInformation, courseDescription, paragraphs, setParagraphs }}>
-                <h2 className='text-center my-4 fw-bold'>Syllabus Editor</h2>
                 <button className="btn btn-secondary mt-1 mb-1 col-2 offset-5" onClick={fillTestData}>Dev Button</button>
                     <div className='container-fluid col-lg-8 col-md-10 col-sm-12' style={{ fontFamily: "initial", fontSize: "larger"}}>
                         <CourseInformationForm />

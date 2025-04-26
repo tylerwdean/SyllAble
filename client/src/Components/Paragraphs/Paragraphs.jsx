@@ -68,11 +68,11 @@ const Paragraphs = ({submit}) => {
             <div className="row mx-1 mt-5 mb-3">
                 
                 {/* Designed with bootstrap, creates a dropdown and based on what's selected creates the right paragraph */}
-                <div className="dropdown col-md-4 offset-md-4 order-md-2 mb-3 mb-md-0">
-                    <button className="btn btn-warning dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div className="dropdown col-md-4 offset-md-4 order-md-2 mb-3 mb-md-0 px-0">
+                    <button className="btn btn-warning dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Create Paragraph
                     </button>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu w-100">
                         <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
                             createParagraph("bullet")
                         }}>Bullet Paragraph</a></li>
@@ -85,7 +85,7 @@ const Paragraphs = ({submit}) => {
                     </ul>
                 </div>
 
-                <button className="btn btn-success col-md-4 order-md-1" type="submit" id="submit-btn" onClick={submit}>Submit</button>
+                <button className="btn btn-success col-md-4 order-md-1 " type="submit" id="submit-btn" onClick={submit}>Submit</button>
             </div>
         </>
     )
