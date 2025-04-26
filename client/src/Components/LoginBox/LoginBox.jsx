@@ -25,7 +25,7 @@ const LoginBox = () => {
             <div className="container">
                 <div className="col-md-6 col-sm-12 offset-md-3 ">
                     <div className="row">
-                        <h1 className="h3 text-dark text-center mb-4 mt-5 px-0 fs-2 fw-bold" style={{fontFamily: "monospace"}}>Login:</h1>
+                        <h1 className="h3 text-dark text-center mb-4 mt-5 px-0 fs-2 fw-bold">Login:</h1>
                     </div>
                     <form onSubmit={login}>
                     <div className="row d-flex justify-content-center align-items-center">
@@ -47,10 +47,10 @@ const LoginBox = () => {
                         style={{ flexGrow: 1, maxWidth: 'calc(100% - 65px)' }} />
                     </div>
                     <div className="row d-flex justify-content-center">
-                        <button className="btn btn-success col-md-12 col-sm-12 mb-3 mt-5 fs-5" type="submit" style={{ fontFamily: "cursive" }}>Submit</button> 
+                        <button className="btn btn-success col-md-12 col-sm-12 mb-3 mt-5 fs-5" type="submit">Submit</button> 
                     </div>
                     <div className="row d-flex justify-content-center">
-                        <button className="btn btn-warning col-md-12 col-sm-12 mb-3 mt-2 fs-6" style={{ fontFamily: "cursive" }}>Don't have an account?</button>
+                        <button className="btn btn-warning col-md-12 col-sm-12 mb-3 mt-2 fs-6">Don't have an account?</button>
                     </div>
                     </form>
                 </div>

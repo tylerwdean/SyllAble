@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BulletParagraph from '../BulletParagraph/BulletParagraph.jsx'
 import TextParagraph from '../TextParagraph/TextParagraph.jsx'
 import FormContext from "../../Contexts/FormContext.jsx";
 import TableParagraph from "../TableParagraph/TableParagraph.jsx";
 
-const Paragraphs = () => {
+const Paragraphs = ({submit}) => {
 
     //paragraphs will be identified by their index in this object. They have three types, table, text, and bullet. Table is yet to be implemented
     //paragraphs is an array of objects, each object will be identified by the paragraph style and will contain the relevent information based on that. 
@@ -65,24 +65,28 @@ const Paragraphs = () => {
             })}
 
             <hr />
-            {/* Designed with bootstrap, creates a dropdown and based on what's selected creates the right paragraph */}
-            <div className="dropdown">
-                <button className="btn btn-warning dropdown-toggle col-2 offset-md-10" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Create Paragraph
-                </button>
-                <ul className="dropdown-menu">
-                    <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
-                        createParagraph("bullet")
-                    }}>Bullet Paragraph</a></li>
-                    <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
-                        createParagraph("text")
-                    }}>Text Paragraph</a></li>
-                    <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
-                        createParagraph("table")
-                    }}>Table Paragraph</a></li>
-                </ul>
-            </div>
+            <div className="row mx-1 mt-5 mb-3">
+                
+                {/* Designed with bootstrap, creates a dropdown and based on what's selected creates the right paragraph */}
+                <div className="dropdown col-md-4 offset-md-4 order-md-2 mb-3 mb-md-0">
+                    <button className="btn btn-warning dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Create Paragraph
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
+                            createParagraph("bullet")
+                        }}>Bullet Paragraph</a></li>
+                        <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
+                            createParagraph("text")
+                        }}>Text Paragraph</a></li>
+                        <li><a href="#submit-btn" className="dropdown-item" onClick={(e) => {
+                            createParagraph("table")
+                        }}>Table Paragraph</a></li>
+                    </ul>
+                </div>
 
+                <button className="btn btn-success col-md-4 order-md-1" type="submit" id="submit-btn" onClick={submit}>Submit</button>
+            </div>
         </>
     )
 }

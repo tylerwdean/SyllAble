@@ -1,6 +1,5 @@
 {
-    "ignore": [
-      "docxBuilder/*.docx",
-      "docxBuilder/*.json"
-    ]
-  }
+  "ignore": [
+    "docxBuilder"
+  ]
+}
