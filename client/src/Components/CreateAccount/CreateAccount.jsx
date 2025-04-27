@@ -18,6 +18,11 @@ const CreateAccount = () => {
         email,
         password,
       })
+      .then((res) => {
+        if (res.status === 201) {
+          window.location.href = "/login";
+        }
+      })
       .catch((error) => {
         setError(error.response.data);
       });

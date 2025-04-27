@@ -1,6 +1,8 @@
 const APIResult = require("../utils/APIResult");
 const CrudService = require("./crudService");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 class UserService extends CrudService {
   constructor() {
@@ -46,28 +48,58 @@ class UserService extends CrudService {
   }
 
   async login(req) {
+    console.log("Login Request received");
     const validate = this.validateLogin(req);
     if (validate) return validate;
 
     const result = (
-      await this.repository.readByCustom("password, id", "email = $1", [
-        req.body.email,
-      ])
+      await this.repository.readByCustom(
+        "password, id, first_name",
+        "email = $1",
+        [req.body.email]
+      )
     ).message[0];
     if (!result || result.length < 1)
       return new APIResult(403, "Invalid Credentials");
 
     const storedPassword = result.password;
     const id = result.id;
+    const first_name = result.first_name;
+
+    console.log(result);
+
     console.log(req.body.password, storedPassword);
     const bcryptResult = await bcrypt.compare(
       req.body.password,
       storedPassword
     );
     console.log(bcryptResult);
-    if (bcryptResult) return new APIResult(200, toString(id));
-    else return new APIResult(403, "Invalid Credentials");
+    if (bcryptResult) {
+      const newJWT = jwt.sign({ id }, process.env.TOKEN_SECRET, {
+        expiresIn: "172800s",
+      });
+      console.log(newJWT);
+      return new APIResult(200, { jwt: newJWT, first_name: first_name });
+    } else return new APIResult(403, "Invalid Credentials");
   }
 }
 
-module.exports = UserService;
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    console.log(err);
+    console.log(user);
+
+    if (err) return res.sendStatus(403);
+
+    req.user = user;
+
+    next();
+  });
+};
+
+module.exports = { UserService, authenticateToken };

@@ -1,30 +1,15 @@
 import React from "react";
-import axios from "axios";
 import { useState } from "react";
 import User_Logo from "./User_Logo.png";
 import Pass_Logo from "./Password_Logo.webp";
+import { useAuth } from "../../Contexts/AuthContext";
 
 const LoginBox = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
-  const login = async (e) => {
-    e.preventDefault();
-    const data = { email, password };
-    console.log(data);
-    axios
-      .post("/api/user/authenticate", data)
-      .then((response) => {
-        if (response.status == 200) {
-          window.location.href = "/edit";
-        }
-      })
-      .catch((error) => {
-        setError(error.response.data);
-      });
-    //this then redirects if the status code is 200, but this is a development thing. It should instead get the authentication token, store that locally, and then redirect to homepage
-  };
+  const { login, loginError } = useAuth();
+  //this then redirects if the status code is 200, but this is a development thing. It should instead get the authentication token, store that locally, and then redirect to homepage
 
   return (
     <>
@@ -34,12 +19,17 @@ const LoginBox = () => {
             Login:
           </h1>
         </div>
-        {error ? (
+        {loginError ? (
           <div className="alert alert-danger mx-0" role="alert">
-            {error}
+            {loginError}
           </div>
         ) : null}
-        <form onSubmit={login}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            login(email, password);
+          }}
+        >
           <div className="row d-flex justify-content-center align-items-center">
             <img
               src={User_Logo}
