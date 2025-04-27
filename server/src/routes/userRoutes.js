@@ -7,7 +7,8 @@ router.post("/", async (req, res) => {
   res.status(result.status).json(result.message);
 });
 
-router.get("/authenticate", async (req, res) => {
+router.post("/authenticate", async (req, res) => {
+  console.log("Log in request received");
   const result = await new UserService().login(req);
   res.status(result.status).json(result.message);
 });

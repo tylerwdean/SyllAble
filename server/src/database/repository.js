@@ -93,18 +93,18 @@ class Repository {
 
   _parseError(error) {
     // type error
-    if (error.code === "22P02") return new ApiResult(400, error.toString());
+    if (error.code === "22P02") return new APIResult(400, error.toString());
     // should not be null but it is
-    if (error.code === "23502") return new ApiResult(400, error.toString());
+    if (error.code === "23502") return new APIResult(400, error.toString());
     // foreign key error
-    if (error.code === "23503") return new ApiResult(400, error.detail);
+    if (error.code === "23503") return new APIResult(400, error.detail);
     // unique value conflict
-    if (error.code === "23505") return new ApiResult(409, error.detail);
+    if (error.code === "23505") return new APIResult(409, error.detail);
     // column does not exist in table
-    if (error.code === "42703") return new ApiResult(400, error.toString());
+    if (error.code === "42703") return new APIResult(400, error.toString());
     // any other error
     console.error(error);
-    return new ApiResult(500, "Internal Server Error", error);
+    return new APIResult(500, "Internal Server Error", error);
   }
 }
 

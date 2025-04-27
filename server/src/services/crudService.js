@@ -53,9 +53,7 @@ class CrudService {
     const validateReq = this.validate(req);
     if (validateReq) return validateReq;
 
-    const result = await this.repository.create(
-      await this.preprocess(req.body)
-    );
+    const result = await this.repository.create(await this.preprocess(req));
 
     const postprocess = await this.postprocess(req);
     if (postprocess) return postprocess;
