@@ -25,3 +25,9 @@ The generator uses the library [python-docx](https://github.com/python-openxml/p
 ## Setting up the database
 
 The database is managed with docker. Upon starting the database, the schema.sql file is applied to the database. This means that with schema changes, you should remove the volume and restart the database, which will remove all data in the database. This is okay for development. Test data can be inserted when needed.
+
+## Managing the DB schema
+
+We will use atlasgo to manage the schema. In the database folder, run this command to apply the changes to the schema:
+
+atlas migrate diff migration_name --dir "file://migrations" --to "file://schema.sql" --dev-url "docker://postgres/15/dev"

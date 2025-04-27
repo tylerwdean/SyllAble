@@ -11,7 +11,6 @@ function CreateSyllabus() {
       <div className='container'>
         <h2 className='my-4'>Please select a course:</h2>
         <CreationDropdown />
-        
       </div>
     </>
   )

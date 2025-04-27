@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon --verbose server.js"
+    "dev": "nodemon --verbose src/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/tylerwdean/SyllAble#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "pg": "^8.15.6"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
