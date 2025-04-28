@@ -41,7 +41,6 @@ class UserService extends CrudService {
   }
 
   preprocess(req) {
-    console.log(req.body);
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     return { ...req.body, password: hashedPassword };
@@ -64,19 +63,14 @@ class UserService extends CrudService {
     const id = result.id;
     const first_name = result.first_name;
 
-    console.log(result);
-
-    console.log(req.body.password, storedPassword);
     const bcryptResult = await bcrypt.compare(
       req.body.password,
       storedPassword
     );
-    console.log(bcryptResult);
     if (bcryptResult) {
       const newJWT = jwt.sign({ id }, process.env.TOKEN_SECRET, {
         expiresIn: "172800s",
       });
-      console.log(newJWT);
       return new APIResult(200, { jwt: newJWT, first_name: first_name });
     } else return new APIResult(403, "Invalid Credentials");
   }
