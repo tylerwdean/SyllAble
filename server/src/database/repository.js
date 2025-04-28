@@ -78,6 +78,7 @@ class Repository {
       let searchString = `SELECT * FROM ${this.tableName} WHERE id = $1`;
       const client = await pool.connect();
       const result = await client.query(searchString, [id]);
+      client.release();
       return new APIResult(200, result.rows[0]);
     } catch (error) {
       return this._parseError(error);
@@ -97,6 +98,7 @@ class Repository {
       let searchString = `SELECT ${selectStatement} FROM ${this.tableName} WHERE ${whereStatement}`;
       const client = await pool.connect();
       const result = await client.query(searchString, values);
+      client.release();
       return new APIResult(200, result.rows);
     } catch (error) {
       return this._parseError(error);
