@@ -37,10 +37,25 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const firstName = localStorage.getItem("first_name");
+
+    if (token) {
+      setToken(token);
+      setFirstName(firstName || "user");
+    }
+
+    // Mark auth as ready whether token exists or not
+    setReady(true);
+  }, []);
+
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("first_name");
     setToken(null);
     setFirstName(null);
+    window.location.href = "/login";
   };
 
   return (
