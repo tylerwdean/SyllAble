@@ -7,48 +7,6 @@ import FormContext from "../../Contexts/FormContext.jsx";
 import fillTestData from "./fillTestData.jsx";
 import { useAuth } from "../../Contexts/AuthContext.jsx";
 
-const downloadSyllabus = async () => {
-  try {
-    const id = localStorage.getItem("current_syllabus");
-    // Send the data as JSON using Axios
-    const response = await api.get(`/syllabus/${id}/generate`, {
-      responseType: "blob", // Ensure the response is treated as a binary blob
-    });
-
-    // Handle the file download
-    const blob = new Blob([response.data], {
-      type: response.headers["content-type"],
-    });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Syllabus.docx"; // Suggested filename
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    window.URL.revokeObjectURL(url);
-
-    console.log("File downloaded successfully");
-  } catch (error) {
-    console.error("Error: ", error);
-  }
-};
-
-const putFormToServer = async (syllabus) => {
-  try {
-    const id = localStorage.getItem("current_syllabus");
-    await api.put(`/syllabus/${id}`, { syllabus });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const getSyllabus = async () => {
-  const id = localStorage.getItem("current_syllabus");
-  const response = await api.get(`/syllabus/${id}`);
-  return response.data;
-};
-
 function Form() {
   const [courseInformation, setCourseInformation] = useState({
     course_code: "",
@@ -68,11 +26,56 @@ function Form() {
   const [course_description, setCourseDescription] = useState("");
   const [timeoutID, setTimeoutID] = useState();
   const { isReady } = useAuth();
+  const [isLoaded, setLoaded] = useState(false);
+
+  const downloadSyllabus = async () => {
+    try {
+      const id = localStorage.getItem("current_syllabus");
+      // Send the data as JSON using Axios
+      const response = await api.get(`/syllabus/${id}/generate`, {
+        responseType: "blob", // Ensure the response is treated as a binary blob
+      });
+
+      // Handle the file download
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Syllabus.docx"; // Suggested filename
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      console.log("File downloaded successfully");
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+
+  const putFormToServer = async (syllabus) => {
+    try {
+      const id = localStorage.getItem("current_syllabus");
+      await api.put(`/syllabus/${id}`, { syllabus });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getSyllabus = async () => {
+    const id = localStorage.getItem("current_syllabus");
+    const response = await api.get(`/syllabus/${id}`);
+    console.log(response);
+    return response.data;
+  };
 
   useEffect(() => {
     if (!isReady) return;
     const loadData = async () => {
       try {
+        console.log("Fetching data");
         const syllabus = await getSyllabus();
         console.log(syllabus);
         const { course_description, paragraphs, ...course_information } =
@@ -80,6 +83,7 @@ function Form() {
         setParagraphs(paragraphs);
         setCourseDescription(course_description);
         setCourseInformation(course_information);
+        setLoaded(true);
       } catch (error) {
         console.error("Error loading syllabus:", error);
       }
@@ -88,14 +92,15 @@ function Form() {
   }, [isReady]);
 
   useEffect(() => {
+    if (!isLoaded) return;
     clearTimeout(timeoutID);
     const timeout = setTimeout(() => {
       // Function to be executed after the delay
       console.log("Auto-saving");
-      putFormToServer();
-    }, 5000); // Delay of 5000 milliseconds (5 seconds)
+      putFormToServer({ course_description, paragraphs, ...courseInformation });
+    }, 1200); // Delay of 1200 milliseconds (1.2 seconds)
     setTimeoutID(timeout);
-  }, [courseInformation, paragraphs]);
+  }, [courseInformation, paragraphs, isLoaded]);
 
   const save = async () => {
     //gather all the info together into the final json

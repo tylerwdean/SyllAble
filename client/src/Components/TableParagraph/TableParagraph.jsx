@@ -128,7 +128,7 @@ const TableParagraph = (props) => {
         Add Row
       </button>
       <button
-        className="btn btn-success col-2 offset-md-1 mt-3"
+        className="btn btn-success col-2 offset-1 mt-3"
         onClick={(e) => {
           e.preventDefault();
           addCol();

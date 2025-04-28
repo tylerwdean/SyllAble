@@ -13,7 +13,7 @@ function Header() {
         className="image"
         onClick={() => (window.location.href = "/home")}
       />
-      <h2>SyllAble</h2>
+      <h2>Syll-Able</h2>
       <div className="account">
         <h5 onClick={() => logout()}>Log Out</h5>
       </div>
