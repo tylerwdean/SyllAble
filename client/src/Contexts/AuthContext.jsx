@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   );
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [loginError, setLoginError] = useState(null);
+  const [isReady, setReady] = useState(false);
 
   const login = async (email, password) => {
     const data = { email, password };
@@ -17,17 +18,20 @@ export const AuthProvider = ({ children }) => {
     axios
       .post("/api/user/authenticate", data)
       .then((response) => {
+        console.log("hi");
         console.log(response);
         if (response.status == 200) {
           console.log("Log in success");
+          console.log(response.data.jwt);
           localStorage.setItem("first_name", response.data.first_name);
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("token", response.data.jwt);
           setFirstName(response.data.first_name);
           setToken(response.data.jwt);
           window.location.href = "/home";
         }
       })
       .catch((error) => {
+        console.log("uh oh");
         console.log(error.response);
         setLoginError(error.response.data || null);
       });
@@ -39,18 +43,9 @@ export const AuthProvider = ({ children }) => {
     setFirstName(null);
   };
 
-  // Set auth token for all requests if it exists
-  useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      delete axios.defaults.headers.common["Authorization"];
-    }
-  }, [token]);
-
   return (
     <AuthContext.Provider
-      value={{ firstName, token, login, logout, loginError }}
+      value={{ firstName, token, login, logout, loginError, isReady }}
     >
       {children}
     </AuthContext.Provider>

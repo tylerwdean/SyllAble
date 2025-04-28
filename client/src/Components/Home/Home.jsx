@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../Contexts/AuthContext";
 
 const getSyllabi = async () => {
-  axios.get("/api/syllabus").then((res) => {
-    return res.json;
-  });
+  try {
+    const res = await axios.get("/api/syllabus");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const addSyllabus = () => {
@@ -13,7 +16,7 @@ const addSyllabus = () => {
     <div
       className="card"
       style={{ width: "200px", height: "200px" }}
-      onClick={() => console.log("clicked")}
+      onClick={() => (window.location.href = "/create-syllabus")}
     >
       <div className="card-body">
         <h5 className="card-title" style={{ textAlign: "center" }}>
@@ -24,39 +27,47 @@ const addSyllabus = () => {
   );
 };
 
-const displaySyllabus = (syllabus) => {
+const displaySyllabus = (syllabus, index) => {
   return (
     <div
+      key={index}
       className="card"
       style={{ width: "200px", height: "200px" }}
-      onClick={() => console.log("clicked")}
+      onClick={() => {
+        localStorage.setItem("current_syllabus", syllabus.id);
+        window.location.href = "/edit";
+      }}
     >
       <div className="card-body">
         <h5 className="card-title" style={{ textAlign: "center" }}>
-          Programming Languages - A
+          {syllabus.title}
         </h5>
-        <p className="card-text text-center">CSC-330A</p>
-        <p className="card-text text-center">FALL '25</p>
+        <p className="card-text text-center">{syllabus.course_code}</p>
+        <p className="card-text text-center">{syllabus.semester}</p>
       </div>
     </div>
   );
 };
 
 const Home = () => {
-  const { firstName } = useAuth();
+  const { firstName, isReady } = useAuth();
+  const [syllabi, setSyllabi] = React.useState([]);
 
+  useEffect(() => {
+    if (!isReady) return;
+    const asyncFunction = async () => {
+      const result = await getSyllabi();
+      if (result) setSyllabi(result);
+    };
+    asyncFunction();
+  }, [isReady]);
   return (
     <>
       <div className="container">
         <h2 className="my-5">Welcome, {firstName}</h2>
         <div className="row gap-3 mx-0">
           {addSyllabus()}
-          {displaySyllabus()}
-          {displaySyllabus()}
-          {displaySyllabus()}
-          {displaySyllabus()}
-          {displaySyllabus()}
-          {displaySyllabus()}
+          {syllabi.map((syllabus, index) => displaySyllabus(syllabus, index))}
         </div>
       </div>
     </>
