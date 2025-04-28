@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 
 const CreationDropdown = ({ course, setCourse }) => {
   const [choices, setChoices] = useState(null);
@@ -10,7 +10,7 @@ const CreationDropdown = ({ course, setCourse }) => {
     const fetchCourses = async () => {
       try {
         console.log("Trying to fetch data");
-        const response = await axios.get("/api/courses");
+        const response = await api.get("/courses");
         console.log("Data fetched");
         setChoices(response.data);
       } catch (err) {

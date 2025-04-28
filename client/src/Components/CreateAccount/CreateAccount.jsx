@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from "../../api";
 
 const CreateAccount = () => {
   const [firstName, setFirstName] = React.useState("");
@@ -11,8 +11,8 @@ const CreateAccount = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("/api/user", {
+    api
+      .post("/user", {
         first_name: firstName,
         last_name: lastName,
         email,

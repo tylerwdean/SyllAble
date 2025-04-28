@@ -1,6 +1,6 @@
 import React from "react";
 import CreationDropdown from "../CreationDropdown/CreationDropdown";
-import axios from "axios";
+import api from "../../api";
 import { useAuth } from "../../Contexts/AuthContext";
 
 const CreateSyllabus = () => {
@@ -12,8 +12,8 @@ const CreateSyllabus = () => {
 
   const postSyllabus = () => {
     console.log(token);
-    axios
-      .post("/api/syllabus", {
+    api
+      .post("/syllabus", {
         course_code: course.course_code,
         title,
         semester,

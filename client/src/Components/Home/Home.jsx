@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useAuth } from "../../Contexts/AuthContext";
 
 const getSyllabi = async () => {
   try {
-    const res = await axios.get("/api/syllabus");
+    const res = await api.get("/syllabus");
     return res.data;
   } catch (error) {
     console.error(error);

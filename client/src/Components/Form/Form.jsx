@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api.js";
 import CourseInformationForm from "../CourseInformationForm/CourseInformationForm.jsx";
 import CourseDescription from "../CourseDescription/CourseDescription.jsx";
 import Paragraphs from "../Paragraphs/Paragraphs.jsx";
@@ -10,7 +10,7 @@ import { useAuth } from "../../Contexts/AuthContext.jsx";
 const postFormToServer = async (data) => {
   try {
     // Send the data as JSON using Axios
-    const response = await axios.post("/api/submit-form", data, {
+    const response = await api.post("/submit-form", data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -39,7 +39,7 @@ const postFormToServer = async (data) => {
 const putFormToServer = async (syllabus) => {
   try {
     const id = localStorage.getItem("current_syllabus");
-    axios.put(`/api/syllabus/${id}`, { syllabus });
+    api.put(`/syllabus/${id}`, { syllabus });
   } catch (error) {
     console.error(error);
   }
@@ -47,7 +47,7 @@ const putFormToServer = async (syllabus) => {
 
 const getSyllabus = async () => {
   const id = localStorage.getItem("current_syllabus");
-  const response = await axios.get(`/api/syllabus/${id}`);
+  const response = await api.get(`/syllabus/${id}`);
   return response.data;
 };
 
