@@ -1,6 +1,7 @@
 CREATE TABLE courses (
-    code VARCHAR(10) PRIMARY KEY,
-    title VARCHAR(64) NOT NULL
+    course_code VARCHAR(10) PRIMARY KEY,
+    course_title VARCHAR(64) NOT NULL,
+    course_description VARCHAR(2048)
 );
 
 CREATE TABLE users (
@@ -13,7 +14,7 @@ CREATE TABLE users (
 
 CREATE TABLE syllabi (
 title VARCHAR(128),
-course_code VARCHAR(10) REFERENCES courses(code),
+course_code VARCHAR(10) REFERENCES courses(course_code),
 professor_id INTEGER REFERENCES users(id),
 syllabus JSONB,
 semester VARCHAR(64),
