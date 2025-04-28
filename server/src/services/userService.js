@@ -48,10 +48,8 @@ class UserService extends CrudService {
   }
 
   async login(req) {
-    console.log("Login Request received");
     const validate = this.validateLogin(req);
     if (validate) return validate;
-
     const result = (
       await this.repository.readByCustom(
         "password, id, first_name",
@@ -85,15 +83,13 @@ class UserService extends CrudService {
 }
 
 const authenticateToken = (req, res, next) => {
+  console.log("verifying JWT");
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
+  if (token) console.log(token);
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    console.log(err);
-    console.log(user);
-
     if (err) return res.sendStatus(403);
 
     req.user = user;

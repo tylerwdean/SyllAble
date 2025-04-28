@@ -15,6 +15,7 @@ class Repository {
    */
   async create(params) {
     try {
+      console.log(params);
       const client = await pool.connect();
       const keys = Object.keys(params).join(", ");
       const values = Object.values(params);
@@ -67,6 +68,17 @@ class Repository {
       await client.query(updateStatement, [value, id]);
       client.release();
       return new APIResult(200, "Updated columns");
+    } catch (error) {
+      return this._parseError(error);
+    }
+  }
+
+  async readByID(id) {
+    try {
+      let searchString = `SELECT * FROM ${this.tableName} WHERE id = $1`;
+      const client = await pool.connect();
+      const result = await client.query(searchString, [id]);
+      return new APIResult(200, result.rows[0]);
     } catch (error) {
       return this._parseError(error);
     }

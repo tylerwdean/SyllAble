@@ -26,8 +26,8 @@ class CrudService {
    * @param {Object} obj
    * @returns {Object} The manipulated object if needed
    */
-  async preprocess(obj) {
-    return obj;
+  async preprocess(req) {
+    return req.body;
   }
 
   /**

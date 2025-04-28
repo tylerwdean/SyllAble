@@ -1,19 +1,39 @@
 const Repository = require("../database/repository");
 const APIResult = require("../utils/APIResult");
 const CrudService = require("./crudService");
+const emptySyllabus = require("../utils/emptySyllabus.json");
 
 class SyllabusService extends CrudService {
   constructor() {
-    this.repository = new Repository("syllabi");
+    super("syllabi");
+  }
+
+  async preprocess(req) {
+    const courseRepository = new Repository("courses");
+    const result = await courseRepository.readByCustom(
+      "course_description, course_title",
+      "course_code = $1",
+      [req.body.course_code]
+    );
+    const { course_description, course_title } = result.message[0];
+
+    return {
+      ...req.body,
+      professor_id: req.user.id,
+      syllabus: {
+        ...emptySyllabus,
+        course_description,
+        course_title,
+        course_code: req.body.course_code,
+      },
+    };
   }
 
   validate(req) {
+    const missingFields = [];
     if (!req.body.hasOwnProperty("title")) missingFields.push("title");
     if (!req.body.hasOwnProperty("course_code"))
       missingFields.push("course_code");
-    if (!req.body.hasOwnProperty("professor_id"))
-      missingFields.push("professor_id");
-    if (!req.body.hasOwnProperty("syllabus")) missingFields.push("syllabus");
     if (!req.body.hasOwnProperty("semester")) missingFields.push("semester");
 
     //todo - verify the syllabus JSON to have correct format
@@ -21,32 +41,48 @@ class SyllabusService extends CrudService {
     //todo - verify the semester meets the format SPR-YY FAL-YY SUM-YY for the possible semesters
 
     if (missingFields.length > 0) {
-      return new ApiResult(400, `Missing fields: ${missingFields.join(", ")}`);
+      return new APIResult(400, `Missing fields: ${missingFields.join(", ")}`);
     }
     if (req.body.hasOwnProperty("id"))
       return new APIResult(400, "Cannot have property 'id'");
+    if (req.body.hasOwnProperty("syllabus"))
+      return new APIResult(400, "Cannot have property 'syllabus'");
+    if (req.body.hasOwnProperty("course_description"))
+      return new APIResult(400, "Cannot have property 'course_description'");
   }
 
   async update(req) {
-    await this.repository.update(req.params.id, "syllabus", req.body.syllabus);
+    const result = (
+      await this.repository.readByCustom("professor_id", "id = $1", [
+        parseInt(req.params.id),
+      ])
+    ).message[0].professor_id;
+
+    if (result !== req.user.id) return new APIResult(403, "Action Forbidden");
+
+    return await this.repository.update(
+      req.params.id,
+      "syllabus",
+      req.body.syllabus
+    );
   }
 
   async getAll(req) {
-    const professor_id = req.body.professor_id;
+    const professor_id = req.user.id; //uses JWT to get the professor's data
     const result = await this.repository.readByCustom(
-      "title, course_code, semester",
+      "title, course_code, semester, id",
       "professor_id = $1",
       [professor_id]
     );
-    return new APIResult(200, result.rows);
+    return new APIResult(200, result.message);
   }
 
   async getSyllabusByID(req) {
-    const syllabusID = req.params.id;
+    const syllabusID = parseInt(req.params.id);
     const result = await this.repository.readByCustom("syllabus", "id = $1", [
       syllabusID,
     ]);
-    return new APIResult(200, result.rows[0]);
+    return new APIResult(200, result.message[0].syllabus);
   }
 
   async generateSyllabus(req) {

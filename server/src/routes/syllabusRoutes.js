@@ -1,18 +1,19 @@
 const express = require("express");
 const SyllabusService = require("../services/syllabusService");
 const router = express.Router();
+const { authenticateToken } = require("../services/userService");
 
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   const result = await new SyllabusService().create(req);
   res.status(result.status).json(result.message);
 });
 
-router.get("/", async (req, res) => {
-  const result = await SyllabusService().getAll(req);
+router.get("/", authenticateToken, async (req, res) => {
+  const result = await new SyllabusService().getAll(req);
   res.status(result.status).json(result.message);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
   const result = await new SyllabusService().update(req);
   res.status(result.status).json(result.message);
 });
