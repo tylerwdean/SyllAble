@@ -2,6 +2,9 @@ const Repository = require("../database/repository");
 const APIResult = require("../utils/APIResult");
 const CrudService = require("./crudService");
 const emptySyllabus = require("../utils/emptySyllabus.json");
+const fs = require("fs");
+const { spawn } = require("child_process");
+const path = require("path");
 
 class SyllabusService extends CrudService {
   constructor() {
@@ -85,15 +88,31 @@ class SyllabusService extends CrudService {
     return new APIResult(200, result.message[0].syllabus);
   }
 
-  async generateSyllabus(req) {
-    const syllabusJSON = await this.getSyllabusByID(req);
+  async generateSyllabus(req, res) {
+    const syllabusJSON = (await this.getSyllabusByID(req)).message;
+    console.log(syllabusJSON);
 
     console.log("Starting Python Script");
-    const inputFilePath = "docxBuilder/temp/temp_syllabus.json";
-    const outputFilePath = "docxBuilder/temp/output.docx";
+
+    // Use absolute paths throughout
+    console.log(__dirname);
+    const scriptDir = path.join(__dirname, "..", "..", "docxBuilder");
+    const tempDir = path.join(scriptDir, "temp");
+
+    // Ensure temp directory exists
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
+    }
+
+    const inputFilePath = path.join(tempDir, "temp_syllabus.json");
+    const outputFilePath = path.join(tempDir, "output.docx");
+    const pythonScriptPath = path.join(scriptDir, "builder.py");
+
+    //const inputFilePath = "docxBuilder/temp/temp_syllabus.json";
+    //const outputFilePath = "docxBuilder/temp/output.docx";
     fs.writeFileSync(inputFilePath, JSON.stringify(syllabusJSON));
 
-    const pythonScriptPath = "docxBuilder/builder.py";
+    //const pythonScriptPath = "docxBuilder/builder.py";
     const pythonProcess = spawn("/usr/bin/python3", [
       pythonScriptPath,
       inputFilePath,

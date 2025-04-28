@@ -24,8 +24,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/:id/generate", async (req, res) => {
-  const result = await new SyllabusService().generateSyllabus(req);
-  res.status(result.status).json(result.message);
+  await new SyllabusService().generateSyllabus(req, res);
 });
 
 module.exports = router;
