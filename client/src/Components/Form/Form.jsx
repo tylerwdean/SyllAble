@@ -7,13 +7,11 @@ import FormContext from "../../Contexts/FormContext.jsx";
 import fillTestData from "./fillTestData.jsx";
 import { useAuth } from "../../Contexts/AuthContext.jsx";
 
-const postFormToServer = async (data) => {
+const downloadSyllabus = async () => {
   try {
+    const id = localStorage.getItem("current_syllabus");
     // Send the data as JSON using Axios
-    const response = await api.post("/submit-form", data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await api.get(`/syllabus/${id}/generate`, {
       responseType: "blob", // Ensure the response is treated as a binary blob
     });
 
@@ -39,7 +37,7 @@ const postFormToServer = async (data) => {
 const putFormToServer = async (syllabus) => {
   try {
     const id = localStorage.getItem("current_syllabus");
-    api.put(`/syllabus/${id}`, { syllabus });
+    await api.put(`/syllabus/${id}`, { syllabus });
   } catch (error) {
     console.error(error);
   }
@@ -88,17 +86,22 @@ function Form() {
     loadData();
   }, [isReady]);
 
-  const submit = async (e) => {
-    e.preventDefault();
-    console.log("Put requested");
+  const submit = async () => {
     //gather all the info together into the final json
     const syllabusJson = {
       ...courseInformation,
       course_description,
       paragraphs,
     };
+    console.log(syllabusJson);
     //PUT the json to the server
     await putFormToServer(syllabusJson);
+  };
+
+  const submitDownload = async (e) => {
+    e.preventDefault();
+    await submit();
+    await downloadSyllabus();
   };
 
   return (
@@ -113,7 +116,9 @@ function Form() {
       >
         <button
           className="btn btn-secondary mt-1 mb-1 col-2 offset-5"
-          onClick={() => fillTestData(setCourseInformation, setParagraphs)}
+          onClick={() =>
+            fillTestData(courseInformation, setCourseInformation, setParagraphs)
+          }
         >
           Dev Button
         </button>
@@ -123,7 +128,7 @@ function Form() {
         >
           <CourseInformationForm />
           <CourseDescription course_description={course_description} />
-          <Paragraphs submit={submit} />
+          <Paragraphs submit={submit} submitDownload={submitDownload} />
         </div>
       </FormContext.Provider>
     </>

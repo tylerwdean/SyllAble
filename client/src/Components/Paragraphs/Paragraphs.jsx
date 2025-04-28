@@ -4,7 +4,7 @@ import TextParagraph from "../TextParagraph/TextParagraph.jsx";
 import FormContext from "../../Contexts/FormContext.jsx";
 import TableParagraph from "../TableParagraph/TableParagraph.jsx";
 
-const Paragraphs = ({ submit }) => {
+const Paragraphs = ({ submit, submitDownload }) => {
   //paragraphs will be identified by their index in this object. They have three types, table, text, and bullet. Table is yet to be implemented
   //paragraphs is an array of objects, each object will be identified by the paragraph style and will contain the relevent information based on that.
   const { setParagraphs, paragraphs } = useContext(FormContext);
@@ -129,7 +129,7 @@ const Paragraphs = ({ submit }) => {
           className="btn btn-success col-md-4 order-md-1 "
           type="submit"
           id="submit-btn"
-          onClick={submit}
+          onClick={submitDownload}
         >
           Submit
         </button>

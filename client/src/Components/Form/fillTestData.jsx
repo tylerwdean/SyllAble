@@ -1,15 +1,19 @@
-const fillTestData = (setCourseInformation, setParagraphs) => {
+const fillTestData = (
+  courseInformation,
+  setCourseInformation,
+  setParagraphs
+) => {
   setCourseInformation({
-    courseCode: "CSC 310 - Programming Languages",
-    professorName: "Dcn. Stephen Frezza",
+    ...courseInformation,
+    professor_name: "Dcn. Stephen Frezza",
     office: "CTT G06",
-    officeHours: "MF 10-12, R 2-3",
+    office_hours: "MF 10-12, R 2-3",
     phone: "740-283-6287",
     email: "tabrown@franciscan.edu",
     semester: "Spring 2025",
     classroom: "CTT G03",
-    classDays: "TR",
-    classTimes: "12:45-2:00PM",
+    class_days: "TR",
+    class_times: "12:45-2:00PM",
   });
 
   setParagraphs([
