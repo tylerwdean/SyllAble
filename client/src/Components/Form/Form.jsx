@@ -66,6 +66,7 @@ function Form() {
 
   const [paragraphs, setParagraphs] = useState([]);
   const [course_description, setCourseDescription] = useState("");
+  const [timeoutID, setTimeoutID] = useState();
   const { isReady } = useAuth();
 
   useEffect(() => {
@@ -86,7 +87,17 @@ function Form() {
     loadData();
   }, [isReady]);
 
-  const submit = async () => {
+  useEffect(() => {
+    clearTimeout(timeoutID);
+    const timeout = setTimeout(() => {
+      // Function to be executed after the delay
+      console.log("Auto-saving");
+      putFormToServer();
+    }, 5000); // Delay of 5000 milliseconds (5 seconds)
+    setTimeoutID(timeout);
+  }, [courseInformation, paragraphs]);
+
+  const save = async () => {
     //gather all the info together into the final json
     const syllabusJson = {
       ...courseInformation,
@@ -100,7 +111,7 @@ function Form() {
 
   const submitDownload = async (e) => {
     e.preventDefault();
-    await submit();
+    await save();
     await downloadSyllabus();
   };
 
@@ -128,7 +139,7 @@ function Form() {
         >
           <CourseInformationForm />
           <CourseDescription course_description={course_description} />
-          <Paragraphs submit={submit} submitDownload={submitDownload} />
+          <Paragraphs submitDownload={submitDownload} />
         </div>
       </FormContext.Provider>
     </>

@@ -14,7 +14,9 @@ function Header() {
         onClick={() => (window.location.href = "/home")}
       />
       <h2>SyllAble</h2>
-      <h6 onClick={() => logout()}>Log Out</h6>
+      <div className="account">
+        <h5 onClick={() => logout()}>Log Out</h5>
+      </div>
     </header>
   );
 }
