@@ -46,6 +46,10 @@ class UserService extends CrudService {
     return { ...req.body, password: hashedPassword };
   }
 
+  filter(response) {
+    return { email: response.email, first_name: response.first_name };
+  }
+
   async login(req) {
     const validate = this.validateLogin(req);
     if (validate) return validate;

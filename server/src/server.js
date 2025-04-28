@@ -4,6 +4,8 @@ const cors = require("cors");
 const courseRoutes = require("./routes/courseRoutes");
 const userRoutes = require("./routes/userRoutes");
 const syllabusRoutes = require("./routes/syllabusRoutes");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +22,9 @@ app.use(
     credentials: true, // If using cookies
   })
 );
+
+const swaggerDocument = YAML.load("src/swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/api/healthcheck", (req, res) => {
   console.log("Healthcheck request received");

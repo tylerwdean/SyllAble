@@ -22,9 +22,16 @@ const CreateAccount = () => {
         if (res.status === 201) {
           window.location.href = "/login";
         }
+        if (res.status === 409) {
+          setError("Email already in use");
+        }
       })
       .catch((error) => {
-        setError(error.response.data);
+        if (error.response.status === 409) {
+          setError("Email in use");
+        } else {
+          setError(error.response.data);
+        }
       });
   };
   return (
