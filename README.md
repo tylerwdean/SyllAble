@@ -1,6 +1,6 @@
 # SyllAble
 
-Tyler tackles the biggest problem at the University- Syllabi!!!
+A goated team of Franciscan Students tackles the biggest problem at the University- Syllabi!!!
 
 ## Starting the servers for development
 
