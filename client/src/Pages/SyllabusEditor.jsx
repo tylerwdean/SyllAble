@@ -12,4 +12,4 @@ function SyllabusEditor() {
   )
 }
 
-export default SyllabusEditor
+export default SyllabusEditor;

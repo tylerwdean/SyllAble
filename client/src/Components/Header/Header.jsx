@@ -1,15 +1,24 @@
-import React from 'react'
-import './Header.css';
-import FUS_Logo from './FUS_LOGO_3.jpg';
+import React from "react";
+import "./Header.css";
+import FUS_Logo from "./FUS_LOGO_3.jpg";
+import { useAuth } from "../../Contexts/AuthContext";
 
 function Header() {
-    return (
-        <header className="custom-header py-3 sticky-top">
-            <img src={FUS_Logo} alt='FUS Logo' className="image" />
-            <h2 className='mb-3'>SyllAble</h2>
-            <h4>Where you're able to build a Syllabus</h4>
-        </header>
-    )
+  const { logout } = useAuth();
+  return (
+    <header className="custom-header py-3 sticky-top">
+      <img
+        src={FUS_Logo}
+        alt="FUS Logo"
+        className="image"
+        onClick={() => (window.location.href = "/home")}
+      />
+      <h2>Syll-Able</h2>
+      <div className="account">
+        <h5 onClick={() => logout()}>Log Out</h5>
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Header;

@@ -171,7 +171,7 @@ run.font.size = Pt(20)
 docTitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 courseTitle = document.add_paragraph()
-run = courseTitle.add_run(data['courseCode'])
+run = courseTitle.add_run(data['course_code'] + " - " + data['course_title'])
 run.font.size = Pt(16)
 courseTitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -185,11 +185,11 @@ table = document.add_table(rows=1, cols=2)
 
 # Fill the left column with professor's details
 left_cell = table.cell(0, 0)
-left_cell.text = f"Professor: {data['professorName']}\nOffice: {data['office']}\nOffice Hours: {data['officeHours']}\nPhone: {data['phone']}\nEmail: {data['email']}"
+left_cell.text = f"Professor: {data['professor_name']}\nOffice: {data['office']}\nOffice Hours: {data['office_hours']}\nPhone: {data['phone']}\nEmail: {data['email']}"
 
 # Fill the right column with aligned items
 right_cell = table.cell(0, 1)
-right_cell.text = f"Semester: {data['semester']}\nClassroom: {data['classroom']}\nClass Meeting Days: {data['classDays']}\nClass Meeting Times: {data['classTimes']}"
+right_cell.text = f"Semester: {data['semester']}\nClassroom: {data['classroom']}\nClass Meeting Days: {data['class_days']}\nClass Meeting Times: {data['class_times']}"
 
 # Adjust formatting for the items in the table
 for para in right_cell.paragraphs:
@@ -208,7 +208,7 @@ for para in left_cell.paragraphs:
 courseDescriptionParagraph = {
     "style": "text",
     "title": "Course Description",
-    "content": data['courseDescription']
+    "content": data['course_description']
 }
 add_paragraph(document, courseDescriptionParagraph)
 

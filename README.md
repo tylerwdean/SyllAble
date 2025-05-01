@@ -1,12 +1,12 @@
 # SyllAble
 
-A goated team of Franciscan Students tackle the biggest problem at the University- Syllabi!!!
+A goated team of Franciscan Students tackles the biggest problem at the University- Syllabi!!!
 
 ## Starting the servers for development
 
 Everything has been changed for using docker compose. To run the project, clone the repo. Rename the '.env-example' to '.env' and update the variables in there with your own variables.
 
-To run the project, ensure you have docker on your machine. For the following commands, run them from the root directory of the project. Run `docker compose build` to build the images. Then run `docker compose up` to start up the project. All data in the database will persist in a docker volume. To remove the volume, take the volume down with `docker compose down -v`. Otherwise, just use `docker compose down`.
+To run the project, ensure you have docker on your machine. For the following commands, run them from the root directory of the project. Run `docker compose build` to build the images. Then run `docker compose up -d` to start up the project. All data in the database will persist in a docker volume. To remove the volume, take the volume down with `docker compose down -v`. Otherwise, just use `docker compose down`.
 
 ## Local development environment
 
@@ -25,3 +25,11 @@ The generator uses the library [python-docx](https://github.com/python-openxml/p
 ## Setting up the database
 
 The database is managed with docker. Upon starting the database, the schema.sql file is applied to the database. This means that with schema changes, you should remove the volume and restart the database, which will remove all data in the database. This is okay for development. Test data can be inserted when needed.
+
+## Managing the DB schema
+
+We will use atlasgo to manage the schema. In the database folder, run this command to apply the changes to the schema:
+
+atlas migrate diff migration_name --dir "file://migrations" --to "file://schema.sql" --dev-url "docker://postgres/15/dev"
+
+The atlas migrations are applied to the database during docker compose startup.
